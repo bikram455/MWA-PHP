@@ -1,0 +1,62 @@
+[
+    {
+        "title": "God of War", "publisher": "Sony Interactive Entertainment",
+        "platforms": [{"name": "Playstation 2", "year": 2005}]
+    },
+    {
+        "title": "God of War II", "publisher": "Sony Interactive Entertainment",
+        "platforms": [{"name": "Playstation 2", "year": 2005}, {"name": "Playstation 3", "year": 2005}]
+    },
+    {
+        "title": "God of War III", "publisher": "Sony Interactive Entertainment",
+        "platforms": [{"name": "Playstation 3", "year": 2010}, {"name": "Playstation 4", "year": 2015}]
+    },
+    {
+        "title": "Sekiro : Shadows Die Twice", "publisher": "Activision",
+        "platforms": [{"name": "Microsoft Windows", "year": 2019}, {"name": "Playstation 4", "year": 2019}, {"name": "Xbox One", "year": 2019}, {"name": "Google Stadia", "year": 2019}]
+    },
+    {
+        "title": "Grand Theft Auto: Vice City", "publisher": "Rockstar Games",
+        "platforms": [{"name": "Microsoft Windows", "year": 2003}, {"name": "Playstation 2", "year": 2002}, {"name": "Xbox", "year": 2003}]
+    },
+    {
+        "title": "Grand Theft Auto: San Andreas", "publisher": "Rockstar Games",
+        "platforms": [{"name": "Microsoft Windows", "year": 2005}, {"name": "Playstation 2", "year": 2005}, {"name": "Xbox", "year": 2005}]
+    },
+    {
+        "title": "Marine Heavy Gunner: Vietnam", "publisher": "Groove Games",
+        "platforms": [{"name": "Microsoft Windows", "year": 2004}]
+    },
+    {
+        "title": "Delta Force: Black Hawk Down", "publisher": "NovaLogic",
+        "platforms": [{"name": "Microsoft Windows", "year": 2003}, {"name": "Mac OS X", "year": 2004}, {"name": "Playstation 2", "year": 2005}, {"name": "Xbox", "year": 2005}]
+    },
+    {
+        "title": "Tekken 6", "publisher": "Namco Bandai Games",
+        "platforms": [{"name": "Arcade", "year": 2007}, {"name": "Playstation 3", "year": 2009}, {"name": "Xbox 360", "year": 2009}, {"name": "Playstation Portable", "year": 2009}]
+    },
+    {
+        "title": "Golden Axe III", "publisher": "Sega",
+        "platforms": [{"name": "Sega Genesis", "year": 1993}]
+    },
+    {
+        "title": "Gun", "publisher": "Activision",
+        "platforms": [{"name": "Playstation 2", "year": 2005}, {"name": "Playstation 3", "year": 2005}, {"name": "Xbox", "year": 2005}, {"name": "Xbox 360", "year": 2005}, {"name": "Microsoft Windows", "year": 2005}, {"name": "Playstation Portable", "year": 2005}]
+    },
+    {
+        "title": "Counter Strike", "publisher": "Valve",
+        "platforms": [{"name": "Microsoft Windows", "year": 2000}, {"name": "Xbox", "year": 2000}]
+    },
+    {
+        "title": "Max Payne 2: The Fall of Max Payne", "publisher": "Rockstar Games",
+        "platforms": [{"name": "Microsoft Windows", "year": 2003}, {"name": "Xbox", "year": 2003}, {"name": "Playstation 2", "year": 2003}]
+    },
+    {
+        "title": "Road Rash", "publisher": "Electronic Arts",
+        "platforms": [{"name": "Microsoft Windows", "year": 1994}]
+    },
+    {
+        "title": "Call of Duty 4: Modern Warfare", "publisher": "Activision",
+        "platforms": [{"name": "Microsoft Windows", "year": 2007}, {"name": "Playstation 3", "year": 2007}]
+    }
+]
