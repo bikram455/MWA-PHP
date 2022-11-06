@@ -1,3 +1,5 @@
+const SYSTEM_CONSTANTS = require('../constants/system.constants');
+
 const objectId = require('mongoose').Types.ObjectId;
 
 const dbUtils = {};
@@ -10,7 +12,7 @@ dbUtils.isAModel = function(data, schema) {
     for(key in schema) {
         const validators = schema[key]['validators'];
         if(validators && validators.length > 0) {
-            if(validators[0]['type'] === 'required' && !data[key]) {
+            if(validators[0]['type'] === SYSTEM_CONSTANTS.REQUIRED && !data[key]) {
                 isModel = false;
             }
         }

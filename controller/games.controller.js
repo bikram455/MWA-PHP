@@ -71,4 +71,24 @@ gamesController.addgame = function(req, res) {
     res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: SYSTEM_CONSTANTS.GAME_VALIDATION_ERROR});
 };
 
+gamesController.deleteGame = function(req, res) {
+    if(!dbUtils.checkValidObjectId(req.params.gameId)) {
+        res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: 'Invalid game id.'});
+        return;
+    }
+    const response = {
+        status: parseInt(process.env.SUCCESS_STATUS_CODE),
+        message: SYSTEM_CONSTANTS.GAME_DELETE_SUCCESS
+    };
+    Game.remove({'_id': req.params.gameId}).exec(function(err, success) {
+        if(err) {
+            res.message = SYSTEM_CONSTANTS.GAME_DELETE_ERROR;
+        } else if(success['deletedCount'] === 0) {
+            response.status = parseInt(process.env.NOT_FOUND_STATUS_CODE);
+            response.message =  SYSTEM_CONSTANTS.GAME_NOT_FOUND;
+        }
+        res.status(response.status).json({message: response.message});
+    });
+}
+
 module.exports = gamesController;
