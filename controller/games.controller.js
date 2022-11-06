@@ -46,32 +46,29 @@ gamesController.getGame = function(req, res) {
 gamesController.addgame = function(req, res) {
     if(!systemUtils.isObjectEmpty(req.body)) {
         if(!dbUtils.isAModel(req.body, Game.schema.paths)) {
-            console.log('is not a model');
+            res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: SYSTEM_CONSTANTS.GAME_VALIDATION_ERROR});
         } else {
-            console.log('is a model');
+            const response = {
+                status: parseInt(process.env.SUCCESS_STATUS_CODE),
+                message: SYSTEM_CONSTANTS.GAME_ADD_SUCCESS
+            };
+            const game = {
+                name: req.body.name,
+                publisher: req.body.publisher,
+                platforms: req.body.platforms
+            };
+            const body = new Game(game);
+            body.save(function(err, success) {
+                if(err) {
+                    response.status = process.env.INTERNAL_SERVER_ERROR_STATUS_CODE;
+                    response.message = SYSTEM_CONSTANTS.GAME_ADD_FAIL;
+                } 
+                res.status(response.status).json({message: response.message});
+            });
         }
-        // if()
-        // const game = {
-        //     name: req.body.name,
-        //     company: req.body.company,
-        //     platforms: req.body.platforms
-        // };
-        // const body = new Game(game);
-        // body.save(function(err, success) {
-        //     if(err) {
-        //         console.log('Error is: ', err, Object.keys(err), err['errors']);
-        //     } else {
-        //         console.log('Success: ', success)
-        //     }
-        // });
-        // console.log('hello: ', );
-        // Game.create({}).exec(function(err, data) {
-        //     if(err) console.error('Error is: ', err['_message']);
-        //     else console.log(data);
-        // });
+        return;
     }
-    console.log('exit add game')
-    res.send('test')
+    res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: SYSTEM_CONSTANTS.GAME_VALIDATION_ERROR});
 };
 
 module.exports = gamesController;
