@@ -1,0 +1,18 @@
+{
+  "name": "mwa-php",
+  "version": "1.0.0",
+  "description": "This is a personal hobby project created for the MWA course.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bikram Samsohang",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.1"
+  }
+}
