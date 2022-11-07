@@ -18,6 +18,7 @@ router.route('/games/:gameId/platforms')
     .put();
 
 router.route('/games/:gameId/platforms/:platformId')
+.get(platformsController.getPlatform)
 .delete(platformsController.deletePlatform)
 .put(platformsController.updatePlatform);
 

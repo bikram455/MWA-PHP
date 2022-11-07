@@ -46,6 +46,40 @@ platformController.getPlatforms = function(req, res) {
     }
 }
 
+platformController.getPlatform = function(req, res) {
+    const response = systemUtils.getResponse();
+    if(!dbUtils.checkValidObjectId(req.params.gameId)) {
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {message: GAME_CONSTANTS.INVALID_GAME_ID};
+    } else if(!dbUtils.checkValidObjectId(req.params.platformId)) {
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {error: PLATFORM_CONSTANTS.INVALID_PLATFORM_ID};
+    } else {
+        Game.findById(req.params.gameId).exec(function(err, game) {
+            if(err) {
+                response.status = process.env.BAD_REQUEST_STATUS_CODE;
+                response.body = {message: PLATFORM_CONSTANTS.PLATFORMS_GET_ERROR};
+            } else {
+                if(game) {
+                    platform = game.platforms.id(req.params.platformId);
+                    if(platform) {
+                        response.body = {platform: game.platforms.id(req.params.platformId)};
+                    } else {
+                        response.status = process.env.NOT_FOUND_STATUS_CODE;
+                        response.body = {message: PLATFORM_CONSTANTS.PLATFORM_NOT_FOUND};  
+                    }
+                } else {
+                    response.status = process.env.NOT_FOUND_STATUS_CODE;
+                    response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};
+                }
+            }
+            systemUtils.sendResponse(res, response);
+        });
+        return;
+    }
+    systemUtils.sendResponse(res, response);
+}
+
 platformController.addPlatform = function(req, res) {
     const response = systemUtils.getResponse();
     if(!dbUtils.checkValidObjectId(req.params.gameId)) {
