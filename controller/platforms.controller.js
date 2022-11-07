@@ -3,6 +3,7 @@ const dbUtils = require('../utilities/db.utils');
 const systemUtils = require('../utilities/system.utils');
 const GAME_CONSTANTS = require('../constants/game.constants');
 const Game = require('mongoose').model(process.env.GAME_MODEL);
+const SYSTEM_CONSTANTS = require('../constants/system.constants');
 const PLATFORM_CONSTANTS = require('../constants/platform.constants');
 
 platformController.getPlatforms = function(req, res) {
@@ -18,7 +19,23 @@ platformController.getPlatforms = function(req, res) {
                 response.body = {message: PLATFORM_CONSTANTS.PLATFORMS_GET_ERROR};
             } else {
                 if(game) {
-                    response.body = {platforms: game[PLATFORM_CONSTANTS.PLATFORMS]};
+                    let offset = 0;
+                    let count = 10;
+                    let validCount = true;
+                    if(req.query && req.query.count) {
+                        count = parseInt(req.query.count);
+                        if(count > 10) {
+                            validCount = false;
+                            response.status = process.env.BAD_REQUEST_STATUS_CODE;
+                            response.body = {message: SYSTEM_CONSTANTS.COUNT_EXCEEDED};
+                        }
+                    }
+                    if(req.query && req.query.offset) {
+                        offset = count * parseInt(req.query.offset);
+                    }
+                    if(validCount) {
+                        response.body = {platforms: game[PLATFORM_CONSTANTS.PLATFORMS].slice(offset, offset + count)};
+                    }
                 } else {
                     response.status = process.env.NOT_FOUND_STATUS_CODE;
                     response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};

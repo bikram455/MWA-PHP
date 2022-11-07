@@ -1,4 +1,5 @@
-require('dotenv').config();
+require('dotenv').config({ path: './dev.env' }) // Please comment this before running the app.
+// require('dotenv').config();  // Please make changes to the env files and uncomment this before running the app.
 require('./data/db-connection');
 const routes = require('./routes');
 const express = require('express');

@@ -3,17 +3,36 @@ const dbUtils = require('../utilities/db.utils');
 const systemUtils = require('../utilities/system.utils');
 const GAME_CONSTANTS = require('../constants/game.constants');
 const Game = require('mongoose').model(process.env.GAME_MODEL);
+const SYSTEM_CONSTANTS = require('../constants/system.constants');
 
 gamesController.getGames = function(req, res) {
     const response = systemUtils.getResponse();
-    Game.find().exec(function(err, games) {
-        if(err) {
-            response.body = {error: err};
-        } else {
-            response.body = {games};
+    let offset = 0;
+    let count = 10;
+    let validCount = true;
+    if(req.query && req.query.count) {
+        count = parseInt(req.query.count);
+        if(count > 10) {
+            validCount = false;
+            response.status = process.env.BAD_REQUEST_STATUS_CODE;
+            response.body = {message: SYSTEM_CONSTANTS.COUNT_EXCEEDED};
         }
+    }
+    if(req.query && req.query.offset) {
+        offset = count * parseInt(req.query.offset);
+    }
+    if(validCount) {
+        Game.find().skip(offset).limit(count).exec(function(err, games) {
+            if(err) {
+                response.body = {error: err};
+            } else {
+                response.body = {games};
+            }
+            systemUtils.sendResponse(res, response);
+        });
+    } else {
         systemUtils.sendResponse(res, response);
-    });
+    }
 }
 
 gamesController.getGame = function(req, res) {

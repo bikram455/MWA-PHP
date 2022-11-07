@@ -1,7 +1,8 @@
 module.exports = Object.freeze({
     REQUIRED: 'required',
-    PLATFORMS_GET_ERROR: 'Error while fetching platforms',
+    BAD_REQUEST: 'Bad request',
     MONGOOSE_CLOSED: 'Mongoose Closed!',
+    COUNT_EXCEEDED: 'Count exceeded, maximum count can be 10!',
     MONGOOSE_CONNECTED: 'Mongoose connected!',
     RESTART_RECEIVED: 'Restart Signal Received!',
     SERVER_LISTEN_MESSAGE: 'Listening to server: ',
@@ -9,6 +10,6 @@ module.exports = Object.freeze({
     INTERRUPT_RECEIVED: 'Interrupt Signal Received!',
     TERMINATE_RECEIVED: 'Terminate Signal Received!',
     GAMES_FETCH_ERROR: 'Error while fetching games.',
+    PLATFORMS_GET_ERROR: 'Error while fetching platforms',
     MONGOOSE_CONNECTION_OPEN: 'Mongoose connection open!',
-    BAD_REQUEST: 'Bad request',
 });
