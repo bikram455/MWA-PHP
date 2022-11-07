@@ -6,42 +6,40 @@ const Game = require('mongoose').model(process.env.GAME_MODEL);
 const PLATFORM_CONSTANTS = require('../constants/platform.constants');
 
 platformController.getPlatforms = function(req, res) {
+    const response = systemUtils.getResponse();
     if(!dbUtils.checkValidObjectId(req.params.gameId)) {
-        res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: 'Invalid game id.'});
-        return;
-    }
-    const response = {
-        status: process.env.SUCCESS_STATUS_CODE
-    };
-    Game.findOne({_id: req.params.gameId}).exec(function(err, game) {
-        if(err) {
-            response.status = process.env.BAD_REQUEST_STATUS_CODE;
-            response.body = {message: PLATFORM_CONSTANTS.PLATFORMS_GET_ERROR};
-        } else {
-            if(game) {
-                response.body = {platforms: game['platforms']};
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {message: GAME_CONSTANTS.INVALID_GAME_ID};
+        systemUtils.sendResponse(res, response);
+    } else {
+        Game.findById(req.params.gameId).exec(function(err, game) {
+            if(err) {
+                response.status = process.env.BAD_REQUEST_STATUS_CODE;
+                response.body = {message: PLATFORM_CONSTANTS.PLATFORMS_GET_ERROR};
             } else {
-                response.status = process.env.NOT_FOUND_STATUS_CODE;
-                response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};
+                if(game) {
+                    response.body = {platforms: game[PLATFORM_CONSTANTS.PLATFORMS]};
+                } else {
+                    response.status = process.env.NOT_FOUND_STATUS_CODE;
+                    response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};
+                }
             }
-        }
-        res.status(parseInt(response.status)).json(response.body);
-    });
+            systemUtils.sendResponse(res, response);
+        });
+    }
 }
 
 platformController.addPlatform = function(req, res) {
+    const response = systemUtils.getResponse();
     if(!dbUtils.checkValidObjectId(req.params.gameId)) {
-        res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: 'Invalid game id.'});
-        return;
-    }
-    if(!systemUtils.isObjectEmpty(req.body)) {
-        if(!dbUtils.isAModel(req.body, Game.schema.paths['platforms'].schema.paths)) {
-            res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: PLATFORM_CONSTANTS.PLATFORM_VALIDATION_ERROR});
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {message: GAME_CONSTANTS.INVALID_GAME_ID};
+    } else {
+        if(systemUtils.isObjectEmpty(req.body) || (!dbUtils.isAModel(req.body, Game.schema.paths[PLATFORM_CONSTANTS.PLATFORMS].schema.paths))) {
+            response.status = process.env.BAD_REQUEST_STATUS_CODE;
+            response.body = {message: PLATFORM_CONSTANTS.PLATFORM_VALIDATION_ERROR};
         } else {
-            const response = {
-                status: process.env.SUCCESS_STATUS_CODE
-            };
-            Game.findOne({_id: req.params.gameId}).exec(function(err, game) {
+            Game.findById(req.params.gameId).exec(function(err, game) {
                 if(err) {
                     response.status = process.env.BAD_REQUEST_STATUS_CODE;
                     response.body = {message: PLATFORM_CONSTANTS.PLATFORMS_GET_ERROR};
@@ -59,7 +57,7 @@ platformController.addPlatform = function(req, res) {
                             } else {
                                 response.body = {message: PLATFORM_CONSTANTS.PLATFORM_ADD_SUCCESS};
                             }
-                            res.status(parseInt(response.status)).json(response.body);
+                            systemUtils.sendResponse(res, response);
                         });
                         return;
                     } else {
@@ -67,100 +65,96 @@ platformController.addPlatform = function(req, res) {
                         response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};
                     }
                 }
-                res.status(parseInt(response.status)).json(response.body);
+                systemUtils.sendResponse(res, response);
             });
+            return;
         }
-        return;
     }
-    res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: PLATFORM_CONSTANTS.PLATFORM_VALIDATION_ERROR});
+    systemUtils.sendResponse(res, response);
 }
 
 platformController.deletePlatform = function(req, res) {
+    const response = systemUtils.getResponse(PLATFORM_CONSTANTS.PLATFORM_DELETE_SUCCESS);
     if(!dbUtils.checkValidObjectId(req.params.gameId)) {
-        res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: GAME_CONSTANTS.INVALID_GAME_ID});
-        return;
-    }
-
-    if(!dbUtils.checkValidObjectId(req.params.platformId)) {
-        res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: PLATFORM_CONSTANTS.INVALID_PLATFORM_ID});
-        return;
-    }
-    const response = {
-        status: process.env.SUCCESS_STATUS_CODE,
-        body: {message: PLATFORM_CONSTANTS.PLATFORM_DELETE_SUCCESS}
-    }
-    Game.findById(req.params.gameId).exec(function(err, game) {
-        if(err) {
-            response.status = process.env.INTERNAL_SERVER_ERROR_STATUS_CODE;
-            response.body = {message: PLATFORM_CONSTANTS.PLATFORM_DELETE_ERROR};  
-        }
-        if(game) {
-            const platform = game.platforms.id(req.params.platformId);
-            if(platform) {
-                game.platforms.id(req.params.platformId).remove();
-                game.save(function(err) {
-                    if(err) {
-                        response.status = process.env.INTERNAL_SERVER_ERROR_STATUS_CODE;
-                        response.body = {message: PLATFORM_CONSTANTS.PLATFORM_DELETE_ERROR};  
-                    }
-                    res.status(parseInt(response.status)).json(response.body);
-                });
-                return;
-            } else {
-                response.status = process.env.NOT_FOUND_STATUS_CODE;
-                response.body = {message: PLATFORM_CONSTANTS.PLATFORM_NOT_FOUND};  
-            }
-        } else {
-            response.status = process.env.NOT_FOUND_STATUS_CODE;
-            response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};
-        }
-        
-        res.status(parseInt(response.status)).json(response.body);
-    });
-}
-
-platformController.updatePlatform = function(req, res) {
-    if(!dbUtils.checkValidObjectId(req.params.gameId)) {
-        res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: GAME_CONSTANTS.INVALID_GAME_ID});
-        return;
-    }
-
-    if(!dbUtils.checkValidObjectId(req.params.platformId)) {
-        res.status(parseInt(process.env.BAD_REQUEST_STATUS_CODE)).json({message: PLATFORM_CONSTANTS.INVALID_PLATFORM_ID});
-        return;
-    }
-    const response = systemUtils.getResponse(PLATFORM_CONSTANTS.PLATFORM_UPDATE_SUCCESS);
-    if(!systemUtils.isObjectEmpty(req.body) && dbUtils.isAnUpdateModel(req.body, Game.schema.paths['platforms'].schema.paths)) {
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {error: GAME_CONSTANTS.INVALID_GAME_ID};
+    } else if(!dbUtils.checkValidObjectId(req.params.platformId)) {
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {error: PLATFORM_CONSTANTS.INVALID_PLATFORM_ID};
+    } else {
         Game.findById(req.params.gameId).exec(function(err, game) {
+            if(err) {
+                response.status = process.env.INTERNAL_SERVER_ERROR_STATUS_CODE;
+                response.body = {message: PLATFORM_CONSTANTS.PLATFORM_DELETE_ERROR};  
+            }
             if(game) {
                 const platform = game.platforms.id(req.params.platformId);
                 if(platform) {
-                    const platformBody = dbUtils.getUpdateBody(req.body, Game.schema.paths['platforms'].schema.paths);
-                    platform.set(platformBody);
-                    game.save(function(err, success) {
+                    game.platforms.id(req.params.platformId).remove();
+                    game.save(function(err) {
                         if(err) {
                             response.status = process.env.INTERNAL_SERVER_ERROR_STATUS_CODE;
-                            response.body = {message: PLATFORM_CONSTANTS.PLATFORM_UPDATE_ERROR};  
+                            response.body = {message: PLATFORM_CONSTANTS.PLATFORM_DELETE_ERROR};  
                         }
-                        res.status(parseInt(response.status)).json(response.body);
+                        systemUtils.sendResponse(res, response);
                     });
                     return;
                 } else {
                     response.status = process.env.NOT_FOUND_STATUS_CODE;
-                    response.body = {message: PLATFORM_CONSTANTS.PLATFORM_NOT_FOUND};
+                    response.body = {message: PLATFORM_CONSTANTS.PLATFORM_NOT_FOUND};  
                 }
             } else {
                 response.status = process.env.NOT_FOUND_STATUS_CODE;
                 response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};
             }
-            res.status(parseInt(response.status)).json(response.body);
+            systemUtils.sendResponse(res, response);
         });
         return;
-    } else {
-        response.status = process.env.BAD_REQUEST_STATUS_CODE;
-        response.body = {error: PLATFORM_CONSTANTS.PLATFORM_UPDATE_BODY_INVALID};
     }
-    res.status(parseInt(response.status)).json(response.body);
+    systemUtils.sendResponse(res, response);
+}
+
+platformController.updatePlatform = function(req, res) {
+    const response = systemUtils.getResponse(PLATFORM_CONSTANTS.PLATFORM_UPDATE_SUCCESS);
+    if(!dbUtils.checkValidObjectId(req.params.gameId)) {
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {message: GAME_CONSTANTS.INVALID_GAME_ID};
+    } else if(!dbUtils.checkValidObjectId(req.params.platformId)) {
+        response.status = process.env.BAD_REQUEST_STATUS_CODE;
+        response.body = {message: PLATFORM_CONSTANTS.INVALID_PLATFORM_ID};
+    } else {
+        if(!systemUtils.isObjectEmpty(req.body) && dbUtils.isAnUpdateModel(req.body, Game.schema.paths[PLATFORM_CONSTANTS.PLATFORMS].schema.paths)) {
+            Game.findById(req.params.gameId).exec(function(err, game) {
+                if(game) {
+                    const platform = game.platforms.id(req.params.platformId);
+                    if(platform) {
+                        const platformBody = dbUtils.getUpdateBody(req.body, Game.schema.paths[PLATFORM_CONSTANTS.PLATFORMS].schema.paths);
+                        platform.set(platformBody);
+                        game.save(function(err, success) {
+                            if(err) {
+                                response.status = process.env.INTERNAL_SERVER_ERROR_STATUS_CODE;
+                                response.body = {message: PLATFORM_CONSTANTS.PLATFORM_UPDATE_ERROR};  
+                            }
+                            systemUtils.sendResponse(res, response);
+                        });
+                        return;
+                    } else {
+                        response.status = process.env.NOT_FOUND_STATUS_CODE;
+                        response.body = {message: PLATFORM_CONSTANTS.PLATFORM_NOT_FOUND};
+                    }
+                } else {
+                    response.status = process.env.NOT_FOUND_STATUS_CODE;
+                    response.body = {message: GAME_CONSTANTS.GAME_NOT_FOUND};
+                }
+                systemUtils.sendResponse(res, response);
+            });
+            return;
+        } else {
+            response.status = process.env.BAD_REQUEST_STATUS_CODE;
+            response.body = {error: PLATFORM_CONSTANTS.PLATFORM_UPDATE_BODY_INVALID};
+        }
+    }
+    systemUtils.sendResponse(res, response);
 }
 
 module.exports = platformController;

@@ -30,6 +30,10 @@ dbUtils.isAnUpdateModel = function(data, schema) {
                 ++count;
                 if((schema[key]['instance'].toLowerCase() !== typeof(data[key]))){
                     isModel = false;
+                } else {
+                    if(key === 'year' && !(data[key] <= 2022 && data[key] >= 1980)) {
+                        isModel = false;
+                    }
                 }
             }
         }
