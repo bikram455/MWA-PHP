@@ -14,12 +14,11 @@ router.route('/games/:gameId')
 
 router.route('/games/:gameId/platforms')
     .get(platformsController.getPlatforms)
-    .post(platformsController.addPlatform)
-    .put();
+    .post(platformsController.addPlatform);
 
 router.route('/games/:gameId/platforms/:platformId')
-.get(platformsController.getPlatform)
-.delete(platformsController.deletePlatform)
-.put(platformsController.updatePlatform);
+    .get(platformsController.getPlatform)
+    .put(platformsController.updatePlatform)
+    .delete(platformsController.deletePlatform);
 
 module.exports = router;
