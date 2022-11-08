@@ -1,6 +1,7 @@
-const SYSTEM_CONSTANTS = require('../constants/system.constants');
-
 const objectId = require('mongoose').Types.ObjectId;
+const systemUtils = require('../utilities/system.utils');
+const GAME_CONSTANTS = require('../constants/game.constants');
+const SYSTEM_CONSTANTS = require('../constants/system.constants');
 
 const dbUtils = {};
 dbUtils.checkValidObjectId = function(id) {
@@ -56,6 +57,12 @@ dbUtils.getPartialUpdateBody = function(data, body) {
         body[key] = data[key];
     }
     return body;
+}
+
+dbUtils.setErrorForInvalidGameId = function(gameId, response) {
+    if(!dbUtils.checkValidObjectId(gameId)){
+        systemUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, GAME_CONSTANTS.INVALID_GAME_ID);
+    }
 }
 
 module.exports = Object.freeze(dbUtils);
