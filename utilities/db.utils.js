@@ -51,4 +51,11 @@ dbUtils.getUpdateBody = function(data, schema) {
     return updateGame;
 }
 
+dbUtils.getPartialUpdateBody = function(data, body) {
+    for(key in data) {
+        body[key] = data[key];
+    }
+    return body;
+}
+
 module.exports = Object.freeze(dbUtils);

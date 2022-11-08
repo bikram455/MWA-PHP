@@ -9,7 +9,8 @@ router.route('/games')
 
 router.route('/games/:gameId')
     .get(gamesController.getGame)
-    .put(gamesController.updateGame)
+    .put(gamesController.fullUpdateGame)
+    .patch(gamesController.partialUpdateGame)
     .delete(gamesController.deleteGame);
 
 router.route('/games/:gameId/platforms')

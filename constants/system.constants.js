@@ -2,7 +2,7 @@ module.exports = Object.freeze({
     REQUIRED: 'required',
     BAD_REQUEST: 'Bad request',
     MONGOOSE_CLOSED: 'Mongoose Closed!',
-    COUNT_EXCEEDED: 'Count exceeded, maximum count can be 10!',
+    COUNT_INVALID: 'Count invalid, count can be between 1 to 10!',
     MONGOOSE_CONNECTED: 'Mongoose connected!',
     RESTART_RECEIVED: 'Restart Signal Received!',
     SERVER_LISTEN_MESSAGE: 'Listening to server: ',
