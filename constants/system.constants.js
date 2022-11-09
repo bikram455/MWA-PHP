@@ -1,4 +1,6 @@
 module.exports = Object.freeze({
+    NUMBER: 'number',
+    STRING: 'string',
     REQUIRED: 'required',
     BAD_REQUEST: 'Bad request',
     MONGOOSE_CLOSED: 'Mongoose Closed!',

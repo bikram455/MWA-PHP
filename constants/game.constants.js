@@ -1,4 +1,5 @@
 module.exports = Object.freeze({
+    GAME: 'game',
     INVALID_GAME_ID: 'Invalid game id.',
     GAME_ADD_FAIL: 'Error while adding game',
     GAME_DELETE_ERROR: 'Error while deleting game',

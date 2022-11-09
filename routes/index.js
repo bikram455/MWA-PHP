@@ -19,7 +19,8 @@ router.route('/games/:gameId/platforms')
 
 router.route('/games/:gameId/platforms/:platformId')
     .get(platformsController.getPlatform)
-    .put(platformsController.updatePlatform)
+    .patch(platformsController.partialUpdatePlatform)
+    .put(platformsController.fullUpdatePlatform)
     .delete(platformsController.deletePlatform);
 
 module.exports = router;

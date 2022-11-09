@@ -1,4 +1,5 @@
 module.exports = Object.freeze({
+    PLATFORM: 'platform',
     PLATFORMS: 'platforms',
     INVALID_PLATFORM_ID: 'Invalid platform id.',
     PLATFORM_ADD_SUCCESS: 'Platform added successfully.',
