@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Game, GamesService } from '../games.service';
-import { PlatformsService } from '../platforms.service';
+import { Platform, PlatformsService } from '../platforms.service';
 
 @Component({
   selector: 'app-game',
@@ -12,6 +12,8 @@ export class GameComponent implements OnInit {
   game!: Game;
   #gameId!: string;
   addGameVisible: boolean = false;
+  editFlag: boolean = false;
+  editPlatform!: Platform;
   constructor(private _gamesService: GamesService, private _route: ActivatedRoute, private _platformService: PlatformsService) { }
 
   ngOnInit(): void {
@@ -46,5 +48,14 @@ export class GameComponent implements OnInit {
 
   toggleAddPlatformVisibility(flag: boolean): void {
     this.addGameVisible = flag;
+  }
+
+  showEdit(platform: Platform): void {
+    this.editFlag = true;
+    this.editPlatform = platform;
+  }
+
+  hideEdit(): void {
+    this.editFlag = false;
   }
 }

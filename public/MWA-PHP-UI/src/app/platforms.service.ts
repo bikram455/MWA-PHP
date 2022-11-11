@@ -26,7 +26,11 @@ export class PlatformsService {
     };
     return this._http.post(url, body) as Observable<any>;
   }
-
+  
+  updatePlatform(gameId: string, platformId: string, platform: Platform): Observable<any> {
+    const url = `${this.#baseUrl}/games/${gameId}/platforms/${platformId}`;
+    return this._http.put(url, platform) as Observable<any>;
+  }
 }
 
 export class PlatformData {

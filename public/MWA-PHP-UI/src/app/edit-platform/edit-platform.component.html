@@ -1,0 +1,10 @@
+<form [formGroup]="editForm" (ngSubmit)="editPlatform()">
+    <div>
+        <label>Platform name: <input name="name" formControlName="name"></label>
+    </div>
+    <div>
+        <label>Released year: <input type="number" name="year" formControlName="year"></label>
+    </div>
+    <button>Edit</button>
+    <button type="button" (click)="cancelEdit()">Cancel</button>
+</form>

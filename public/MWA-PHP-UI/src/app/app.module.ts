@@ -13,6 +13,7 @@ import { AddGameComponent } from './add-game/add-game.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AddPlatformComponent } from './add-platform/add-platform.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
+import { EditPlatformComponent } from './edit-platform/edit-platform.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EditGameComponent } from './edit-game/edit-game.component';
     FooterComponent,
     AddGameComponent,
     AddPlatformComponent,
-    EditGameComponent
+    EditGameComponent,
+    EditPlatformComponent
   ],
   imports: [
     BrowserModule,
