@@ -1,0 +1,14 @@
+<form #platForm="ngForm" (ngSubmit)="addPlatform(platForm)">
+    <div>
+        <label>
+            Platform name: <input name="name" placeholder="Platform name" [(ngModel)]="platformBody.name">
+        </label>
+    </div>
+    <div>
+        <label>
+            Released year: <input name="year" type="number" placeholder="Released year" [(ngModel)]="platformBody.year">
+        </label>
+    </div>
+    <button>Add platform</button>
+    <button type="button" (click)="hideAddPlatformBody()">Cancel</button>
+</form>

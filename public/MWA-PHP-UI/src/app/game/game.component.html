@@ -1,0 +1,16 @@
+<h4>Game Title: {{game.name}}</h4>
+<h4>Publisher: {{game.publisher}}</h4>
+<table>
+    <tr *ngFor="let platform of game.platforms">
+        <td>{{platform.name}}</td>
+        <td><button (click)="deletePlatform(platform._id)">Delete</button></td>
+        <td><button>Edit</button></td>
+        <!-- <td><button (click)="">Edit</button></td> -->
+    </tr>
+</table>
+<div *ngIf="!addGameVisible">
+    <button (click)="toggleAddPlatformVisibility(true)">Add New Platform</button>
+</div>
+<div *ngIf="addGameVisible">
+    <app-add-platform [gameId]="game._id" (reloadPlatforms)="fetchPlatforms()" (hideAddPlatform)="toggleAddPlatformVisibility($event)"></app-add-platform>
+</div>

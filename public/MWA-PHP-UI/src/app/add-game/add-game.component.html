@@ -1,0 +1,6 @@
+<p>Add a new Game!</p>
+<form [formGroup]="addGameForm" (ngSubmit)="addGame()">
+    Game name: <input formControlName="name"><br>
+    Publisher: <input formControlName="publisher"><br>
+    <button>Add</button>
+</form>

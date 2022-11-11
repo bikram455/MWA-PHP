@@ -1,0 +1,8 @@
+<table>
+    <tr *ngFor="let game of games">
+        <td><a [routerLink]="['/game', game._id]">{{game.name}}</a></td>
+        <td><button (click)="deleteGame(game._id)">Delete</button></td>
+        <td><button [routerLink]="['/edit-game', game._id]">Edit</button></td>
+    </tr>
+</table>
+<button [routerLink]="['/add-game']">Add Game</button>

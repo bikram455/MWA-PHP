@@ -1,0 +1,11 @@
+<form #editGameForm="ngForm" (ngSubmit)="editGame(editGameForm)">
+    <div>
+        <label>Game title: <input name="name" [(ngModel)]="game.name"></label>
+    </div>
+    <div>
+        <label>Publisher: <input name="publisher" [(ngModel)]="game.publisher"></label>
+    </div>
+    <div>
+        <button>Edit Game</button>
+    </div>
+</form>
