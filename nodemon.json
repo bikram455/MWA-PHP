@@ -1,5 +1,5 @@
 {
-    "ignore": ["./*.env"],
+    "ignore": ["./*.env", "./public"],
     "verbose": true,
     "signal": "SIGHUP",
     "env": {

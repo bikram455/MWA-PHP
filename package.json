@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js",
+    "start-frontend": "cd public/MWA-PHP-UI && npm start",
+    "start-backend": "npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bikram Samsohang",

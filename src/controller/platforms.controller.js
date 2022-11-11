@@ -88,14 +88,14 @@ const _deleteGame = function(req, res, response, game) {
 }
 
 const _sendPlatforms = function(req, res, response, game) {
-    response.body = {platforms: game[PLATFORM_CONSTANTS.PLATFORMS]};
+    response.body = {data: game[PLATFORM_CONSTANTS.PLATFORMS]};
     systemUtils.sendResponse(res, response);
 }
 
 const _sendPlatform = function(req, res, response, game) {
     platform = game.platforms.id(req.params.platformId);
     if(platform) {
-        response.body = {platform};
+        response.body = {data: platform};
         systemUtils.sendResponse(res, response);
     } else {
         systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, PLATFORM_CONSTANTS.PLATFORM_NOT_FOUND);

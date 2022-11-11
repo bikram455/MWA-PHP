@@ -68,7 +68,7 @@ gamesController.getGames = function(req, res) {
             if(err) {
                 systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err);
             } else {
-                response.body = {games};
+                response.body = {data: games};
             }
             systemUtils.sendResponse(res, response);
         });
@@ -87,7 +87,7 @@ gamesController.getGame = function(req, res) {
                 if(!game) {
                     systemUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, GAME_CONSTANTS.GAME_NOT_FOUND);                    
                 } else {
-                    response.body = {game: game['_doc']};
+                    response.body = {data: game['_doc']};
                 }
             }
             systemUtils.sendResponse(res, response);
