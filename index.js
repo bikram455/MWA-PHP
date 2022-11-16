@@ -12,11 +12,12 @@ app.use('/api', function(req, res, next) {
     console.log(req.method, req.url);
     // res.header("Access-Control-Allow-Origin", ['*']);
     // res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.append('Access-Control-Allow-Origin', ['*']);
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.append('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, PATCH');
     res.append('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
+
 app.use('/api', routes);
 
 const server = app.listen(process.env.PORT, function() {

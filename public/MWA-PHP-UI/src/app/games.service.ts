@@ -9,8 +9,8 @@ export class GamesService {
   #baseUrl: string = 'http://localhost:3000/api/'
   constructor(private _http: HttpClient) { }
 
-  fetchGames(): Observable<GamesData> {
-    const url = `${this.#baseUrl}games`;
+  fetchGames(page: number): Observable<GamesData> {
+    const url = `${this.#baseUrl}games?offset=${page * 5}`;
     return this._http.get(url) as Observable<GamesData>;
   }
 
@@ -33,21 +33,29 @@ export class GamesService {
     const url = `${this.#baseUrl}games/${gameId}`;
     return this._http.put(url, game) as  Observable<any>;
   }
+
+  updateGamePartial(gameId:string, game: any): Observable<any> {
+    const url = `${this.#baseUrl}games/${gameId}`;
+    return this._http.patch(url, game) as  Observable<any>;
+  }
 }
 
 export class GamesData {
   #data!: Game[];
-
+  #count!: number;
   set data(games: Game[]) {this.#data = games}
+  set count(count: number) { this.#count = count}
   get data(): Game[] {return this.#data}
-  constructor(games: Game[]) {
+  get count(): number { return this.#count}
+  constructor(games: Game[], count: number) {
     this.#data = games;
+    this.#count = count;
   }
 }
 
 export class GameData {
   #data!: Game;
-  
+
   get data(): Game { return this.#data}
   set data(game: Game) { this.#data = game}
   constructor(game: Game) {

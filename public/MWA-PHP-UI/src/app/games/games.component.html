@@ -1,8 +1,12 @@
-<table>
-    <tr *ngFor="let game of games">
-        <td><a [routerLink]="['/game', game._id]">{{game.name}}</a></td>
-        <td><button (click)="deleteGame(game._id)">Delete</button></td>
-        <td><button [routerLink]="['/edit-game', game._id]">Edit</button></td>
-    </tr>
-</table>
-<button [routerLink]="['/add-game']">Add Game</button>
+<div>
+    <button [routerLink]="['/add-game']">Add Game</button>
+    <table>
+        <tr *ngFor="let game of games">
+            <td><a [routerLink]="['/game', game._id]">{{game.name}}</a></td>
+            <td><button (click)="deleteGame(game._id)">Delete</button></td>
+            <td><button [routerLink]="['/edit-game', game._id]">Edit</button></td>
+        </tr>
+    </table>
+    <button [disabled]="currentPage == 0" (click)="getPrevious()">Previous</button>
+    <button [disabled]="currentPage == totalPages" (click)="getNext()">Next</button>
+</div>

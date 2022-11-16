@@ -8,7 +8,8 @@ import { Game, GameData, GamesService } from '../games.service';
 })
 export class GamesComponent implements OnInit {
   games!: Game[];
-
+  currentPage: number = 0;
+  totalPages!: number;
   constructor(private _gamesService: GamesService) { }
 
   ngOnInit(): void {
@@ -16,8 +17,12 @@ export class GamesComponent implements OnInit {
   }
 
   fetchGames() {
-    this._gamesService.fetchGames().subscribe(res => {
+    this._gamesService.fetchGames(this.currentPage).subscribe(res => {
       this.games = res['data'];console.log('games are: ', res, this.games)
+      this.totalPages = parseInt((res['count'] / 5).toString());
+      if(res['count'] % 5 == 0) {
+        --this.totalPages;
+      }
     }, err => {
       console.error(err);
     });
@@ -29,5 +34,15 @@ export class GamesComponent implements OnInit {
     }, err => {
       console.error(err);
     });
+  }
+
+  getPrevious(): void {
+    --this.currentPage;
+    this.fetchGames();
+  }
+
+  getNext(): void {
+    ++this.currentPage;
+    this.fetchGames();
   }
 }
