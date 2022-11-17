@@ -10,6 +10,8 @@ export class GamesComponent implements OnInit {
   games!: Game[];
   currentPage: number = 0;
   totalPages!: number;
+  pages: number[] = [];
+  showModal: boolean = false;
   constructor(private _gamesService: GamesService) { }
 
   ngOnInit(): void {
@@ -22,6 +24,9 @@ export class GamesComponent implements OnInit {
       this.totalPages = parseInt((res['count'] / 5).toString());
       if(res['count'] % 5 == 0) {
         --this.totalPages;
+      }
+      for(let i = 0; i <= this.totalPages; i++) {
+        this.pages[i] = i + 1;
       }
     }, err => {
       console.error(err);
@@ -44,5 +49,18 @@ export class GamesComponent implements OnInit {
   getNext(): void {
     ++this.currentPage;
     this.fetchGames();
+  }
+
+  getPage(pageNumber: number) {
+    this.currentPage = pageNumber - 1;
+    this.fetchGames();
+  }
+
+  showAddGameModal(): void {
+    this.showModal = true;
+  }
+
+  hideAddGameModal(): void {
+    this.showModal = false;
   }
 }

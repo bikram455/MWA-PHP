@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { AddPlatformComponent } from './add-platform/add-platform.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
 import { EditPlatformComponent } from './edit-platform/edit-platform.component';
+import { PlatformsComponent } from './platforms/platforms.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { EditPlatformComponent } from './edit-platform/edit-platform.component';
     AddGameComponent,
     AddPlatformComponent,
     EditGameComponent,
-    EditPlatformComponent
+    EditPlatformComponent,
+    PlatformsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,32 @@
+<div>
+    <table>
+        <tr *ngFor="let platform of platforms">
+            <td>
+                <label>Platform: </label>
+                <p *ngIf="!platform.editName" (click)="showEditName(platform)">{{platform.name}}&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <form #editNameForm="ngForm" *ngIf="platform.editName" (ngSubmit)="updatePlatformName(editNameForm, platform)">
+                    <input name="name" [(ngModel)]="platform.updatedName">
+                    <button type="button" (click)="hideEditName(platform)">Cancel</button>
+                    <button>Edit</button>
+                </form>
+            </td>
+            <td>
+                <label>Released year: </label>
+                <p *ngIf="!platform.editYear" (click)="showEditYear(platform)">{{platform.year}}</p>
+                <form #editYearForm="ngForm" *ngIf="platform.editYear" (ngSubmit)="updatePlatformReleasedYear(editYearForm, platform)">
+                    <input name="year" type="number" [(ngModel)]="platform.updatedYear">
+                    <button type="button" (click)="hideEditYear(platform)">Cancel</button>
+                    <button>Edit</button>
+                </form>
+            </td>
+            <td><button (click)="deletePlatform(platform._id)">Delete</button></td>
+            <td><button (click)="showEdit(platform)">Edit</button></td>
+        </tr>
+    </table>
+    <div *ngIf="!addPlatformVisible && !editFlag">
+        <button (click)="toggleAddPlatformVisibility(true)">Add New Platform</button>
+    </div>
+    <div *ngIf="addPlatformVisible">
+        <app-add-platform [gameId]="gameId" (reloadPlatforms)="fetchPlatforms()" (hideAddPlatform)="toggleAddPlatformVisibility($event)"></app-add-platform>
+    </div>
+</div>

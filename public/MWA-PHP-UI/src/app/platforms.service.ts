@@ -31,6 +31,11 @@ export class PlatformsService {
     const url = `${this.#baseUrl}/games/${gameId}/platforms/${platformId}`;
     return this._http.put(url, platform) as Observable<any>;
   }
+
+  updatePlatformPartial(gameId: string, platformId: string, platform: Platform): Observable<any> {
+    const url = `${this.#baseUrl}/games/${gameId}/platforms/${platformId}`;
+    return this._http.patch(url, platform) as Observable<any>;
+  }
 }
 
 export class PlatformData {
@@ -43,18 +48,34 @@ export class Platform {
   #_id!: string;
   #name!: string;
   #year!: number;
+  #updatedName!: string;
+  #updatedYear!: number;
+  #editName!: boolean;
+  #editYear!: boolean;
 
   get _id(): string {return this.#_id}
   get name(): string {return this.#name}
   get year(): number {return this.#year}
+  get updatedName(): string {return this.#updatedName}
+  get updatedYear(): number {return this.#updatedYear}
+  get editName(): boolean {return this.#editName}
+  get editYear(): boolean {return this.#editYear}
 
   set _id(id: string) {this.#_id = id}
   set name(name: string) {this.#name = name}
   set year(year: number) {this.#year = year}
+  set updatedName(name: string) {this.#updatedName = name}
+  set updatedYear(year: number) {this.#updatedYear = year}
+  set editName(editName: boolean) {this.#editName = editName}
+  set editYear(editYear: boolean) {this.#editYear = editYear}
 
   constructor(id: string, name: string, year: number) {
     this.#_id = id;
     this.#name = name;
     this.#year = year;
+    this.#editName = false;
+    this.#editYear = false;
+    this.#updatedName = name;
+    this.#updatedYear = year;
   }
 }

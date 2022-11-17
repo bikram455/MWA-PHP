@@ -1,9 +1,10 @@
 html {
     position: relative;
-    min-height: 100%;
+    min-height: 96%;
 }
 body {
     margin-bottom: 90px;
+    /* background-image: url('https://wallpapercrafter.com/th800/106306-PlayStation-2-collage-video-games-PlayStation.jpg'); */
 }
 .padded {
     padding-top: 30px;
@@ -15,4 +16,19 @@ body {
     height: 90px;
     background-color: #f5f5f5;
     padding-top: 5px;
+}
+.navbar {
+    padding: 0
+}
+
+.dropdown-menu{
+    position: absolute;
+    top: 45px;
+    visibility: visible;
+    height: 100px;
+    width: 80px;
+}
+
+.my-modal{
+    display: flow-root;
 }

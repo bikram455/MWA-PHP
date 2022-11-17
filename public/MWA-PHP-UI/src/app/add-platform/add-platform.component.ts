@@ -31,6 +31,7 @@ export class AddPlatformComponent implements OnInit {
   addPlatform(dataBody: NgForm) {
     this._platformService.addPlatform(this.gameId, dataBody.value).subscribe(res => {
       this.clearFields();
+      this.hideAddPlatformBody();
       this.reloadPlatforms.emit();
     }, err => {
       console.error(err);

@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <button [routerLink]="['/add-game']">Add Game</button>
     <table>
         <tr *ngFor="let game of games">
@@ -9,4 +9,49 @@
     </table>
     <button [disabled]="currentPage == 0" (click)="getPrevious()">Previous</button>
     <button [disabled]="currentPage == totalPages" (click)="getNext()">Next</button>
+</div> -->
+<div class="modal" [ngClass]="{'my-modal': showModal}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Game</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideAddGameModal()">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <app-add-game (hideModal)="hideAddGameModal()"></app-add-game>
+        </div>
+    </div>
 </div>
+<td><button type="button" class="btn btn-success" (click)="showAddGameModal()">Add New Game</button></td>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Game Title</th>
+            <th scope="col">Publisher</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let game of games; let i = index" [ngClass]="(i % 2) === 0 ? 'table-light' : 'table-secondary'">
+            <th scope="row">{{game.name}}</th>
+            <th scope="row">{{game.publisher}}</th>
+            <td><button type="button" class="btn btn-danger" (click)="deleteGame(game._id)">Delete</button></td>
+            <td><button type="button" class="btn btn-primary" [routerLink]="['/edit-game', game._id]">Edit</button></td>
+        </tr>
+    </tbody>
+  </table>
+  <div>
+    <ul class="pagination pagination-lg">
+        <li class="page-item" [ngClass]="{'disabled': currentPage == 0}">
+            <a class="page-link" (click)="getPrevious()">&laquo;</a>
+        </li>
+        <li *ngFor="let page of pages" [ngClass]="{'disabled': page == (currentPage + 1)}">
+            <a class="page-link" (click)="getPage(page)">{{page}}</a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled':currentPage == totalPages}">
+            <a class="page-link" (click)="getNext()">&raquo;</a>
+        </li>
+    </ul>
+  </div>

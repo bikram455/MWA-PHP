@@ -7,7 +7,7 @@
     "dev": "nodemon",
     "start": "node index.js",
     "start-frontend": "cd public/MWA-PHP-UI && npm start",
-    "start-backend": "npm start",
+    "start-backend": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bikram Samsohang",

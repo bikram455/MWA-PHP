@@ -13,8 +13,8 @@ export class GameComponent implements OnInit {
   game!: Game;
   editGamebody!: Game;
   #gameId!: string;
-  addGameVisible: boolean = false;
-  editFlag: boolean = false;
+  addPlatformVisible: boolean = false;
+  editPlatformFlag: boolean = false;
   editPlatform!: Platform;
   editGameNameFlag: boolean = false;
   editGamePublisherFlag: boolean = false;
@@ -28,40 +28,41 @@ export class GameComponent implements OnInit {
   fetchGame() {
     this._gamesService.fetchGame(this.#gameId).subscribe(res => {
       this.game = res['data'];
-      this.editGamebody= new Game('', this.game.name, this.game.publisher, [])
+      this.editGamebody= new Game('', this.game.name, this.game.publisher, []);
+      this._setEditNameAndYear();
     }, err => {
       console.error(err);
+    });
+  }
+
+  _setEditNameAndYear(): void {
+    this.game['platforms'].forEach(item => {
+      item['updatedName'] = item['name'];
+      item['updatedYear'] = item['year'];
     });
   }
   
   fetchPlatforms() {
     this._platformService.fetchPlatforms(this.#gameId).subscribe(res => {
       this.game.platforms = res['data'];
+      this._setEditNameAndYear();
       this.toggleAddPlatformVisibility(false);
     }, err => {
       console.error(err);
     });
   }
 
-  deletePlatform(platformId: string): void {
-    this._platformService.deletePlatform(this.#gameId, platformId).subscribe(res => {
-      this.fetchPlatforms();
-    }, err => {
-      console.error(err);
-    });
-  }
-
   toggleAddPlatformVisibility(flag: boolean): void {
-    this.addGameVisible = flag;
+    this.addPlatformVisible = flag;
   }
 
   showEdit(platform: Platform): void {
-    this.editFlag = true;
+    this.editPlatformFlag = true;
     this.editPlatform = platform;
   }
 
   hideEdit(): void {
-    this.editFlag = false;
+    this.editPlatformFlag = false;
   }
 
   showEditName(): void {

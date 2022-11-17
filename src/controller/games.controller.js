@@ -65,7 +65,7 @@ gamesController.getGames = function(req, res) {
         offset = parseInt(req.query.offset);
     }
     if(response.status === process.env.SUCCESS_STATUS_CODE) {
-        Game.find().skip(offset).limit(count).sort({name: 1}).exec(function(err, games) {
+        Game.find().skip(offset).limit(count).collation({'locale':'en'}).sort({name: 1}).exec(function(err, games) {
             if(err) {
                 systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err);
             } else {

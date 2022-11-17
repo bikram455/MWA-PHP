@@ -1,6 +1,47 @@
-<p>Add a new Game!</p>
+<!-- <p>Add a new Game!</p>
 <form [formGroup]="addGameForm" (ngSubmit)="addGame()">
-    Game name: <input formControlName="name"><br>
-    Publisher: <input formControlName="publisher"><br>
-    <button>Add</button>
-</form>
+    <table>
+        <tr>
+            <td>Game name: </td>
+            <td><input formControlName="name"><br></td>
+        </tr>
+        <tr>
+            <td>Publisher: </td>
+            <td><input formControlName="publisher"><br></td>
+        </tr>
+        <tr>
+            <td><button type="button" class="btn btn-danger" routerLink="/games">Cancel</button></td>
+            <td><button type="submit" class="btn btn-success">Add</button></td>
+        </tr>
+    </table>
+</form> -->
+
+<div class="modal-body">
+    <p>Modal body text goes here.</p>
+    <form [formGroup]="addGameForm" (ngSubmit)="addGame()">
+        <table>
+            <tr>
+                <td>Game name: </td>
+                <td><input formControlName="name"><br></td>
+            </tr>
+            <tr>
+                <td>Publisher: </td>
+                <td><input formControlName="publisher"><br></td>
+            </tr>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add Game</button>
+            </div> -->
+            <tr>
+                <!-- <td><button type="button" class="btn btn-danger" routerLink="/games">Cancel</button></td>
+                <td><button type="submit" class="btn btn-success">Add</button></td> -->
+                <td><button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Close</button></td>
+                <td><button type="submit" class="btn btn-primary">Add Game</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div> -->
