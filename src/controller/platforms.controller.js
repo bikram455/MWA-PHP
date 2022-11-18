@@ -7,18 +7,19 @@ const SYSTEM_CONSTANTS = require('../constants/system.constants');
 const PLATFORM_CONSTANTS = require('../constants/platform.constants');
 
 const _getGameById = function(req, res, response, callback) {
-    Game.findById(req.params.gameId).exec(function(err, game) {
-        if(err) {
-            systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err);
-        } else {
+    Game.findById(req.params.gameId).exec().then((game) => {
             if(game) {
                 callback(req, res, response, game);
             } else {
                 systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, GAME_CONSTANTS.GAME_NOT_FOUND);
             }
-        }
+    }).catch((err) => {
+        systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err);
+    }).finally(() => {
+        // systemUtils.sendResponse(res, response);
         systemUtils.sendIfError(res, response);
     });
+    
 }
 
 const _updatePlatform = function(res, platformBody, response, game) {

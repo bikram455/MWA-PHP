@@ -6,6 +6,7 @@ import { GamesComponent } from './games/games.component';
 import { AddGameComponent } from './add-game/add-game.component';
 import { compileNgModule } from '@angular/compiler';
 import { EditGameComponent } from './edit-game/edit-game.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
     {path: 'game/:gameId', component: GameComponent},
     {path: 'add-game', component: AddGameComponent},
     {path: 'edit-game/:gameId', component: EditGameComponent},
+    {path: 'register', component: RegisterComponent},
 ]
 
 @NgModule({

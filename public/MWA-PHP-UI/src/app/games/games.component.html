@@ -1,15 +1,3 @@
-<!-- <div>
-    <button [routerLink]="['/add-game']">Add Game</button>
-    <table>
-        <tr *ngFor="let game of games">
-            <td><a [routerLink]="['/game', game._id]">{{game.name}}</a></td>
-            <td><button (click)="deleteGame(game._id)">Delete</button></td>
-            <td><button [routerLink]="['/edit-game', game._id]">Edit</button></td>
-        </tr>
-    </table>
-    <button [disabled]="currentPage == 0" (click)="getPrevious()">Previous</button>
-    <button [disabled]="currentPage == totalPages" (click)="getNext()">Next</button>
-</div> -->
 <div class="modal" [ngClass]="{'my-modal': showModal}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -23,26 +11,52 @@
         </div>
     </div>
 </div>
-<td><button type="button" class="btn btn-success" (click)="showAddGameModal()">Add New Game</button></td>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Game Title</th>
-            <th scope="col">Publisher</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let game of games; let i = index" [ngClass]="(i % 2) === 0 ? 'table-light' : 'table-secondary'">
-            <th scope="row">{{game.name}}</th>
-            <th scope="row">{{game.publisher}}</th>
-            <td><button type="button" class="btn btn-danger" (click)="deleteGame(game._id)">Delete</button></td>
-            <td><button type="button" class="btn btn-primary" [routerLink]="['/edit-game', game._id]">Edit</button></td>
-        </tr>
-    </tbody>
-  </table>
-  <div>
+<div>
+    <button type="button" class="btn btn-success" (click)="showAddGameModal()">Add New Game</button>
+    <form [formGroup]="searchForm" (ngSubmit)="search()">
+        <div class="form-group">
+            <input type="text"  class="form-control " id="inputValid" formControlName="title" placeholder="Game Title">
+        </div>
+    </form>
+</div>
+<div class="table-container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Game Title</th>
+                <th scope="col">Publisher</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let game of games; let i = index" [ngClass]="getRowClass(i)">
+                <th scope="row">
+                    <span *ngIf="!game.editName" (click)="showEditName(game)">{{game.name}}</span>
+                    <form #nameForm="ngForm" (ngSubmit)="editGameName(nameForm, game)" *ngIf="game.editName">
+                        <input name="name" [(ngModel)]="editGamebody.name">
+                        <button type="button" class="btn btn-danger" (click)="hideEditName(game)">Cancel</button>
+                        <button class="btn btn-primary">Edit</button>
+                    </form>
+                </th>
+                <th scope="row">
+                    <span *ngIf="!game.editPublisher" (click)="showEditPublisher(game)">{{game.publisher}}</span>
+                    <form #publisherForm="ngForm" (ngSubmit)="editGamePublisher(publisherForm, game)" *ngIf="game.editPublisher">
+                        <input name="publisher" [(ngModel)]="editGamebody.publisher">
+                        <button type="button" class="btn btn-danger" (click)="hideEditPublisher(game)">Cancel</button>
+                        <button class="btn btn-primary">Edit</button>
+                    </form>
+                </th>
+                <td><button type="button" class="btn btn-danger" (click)="deleteGame(game._id)">Delete</button></td>
+                <td><button type="button" class="btn btn-primary" [routerLink]="['/game', game._id]">View</button></td>
+                <td><button type="button" class="btn btn-primary" [routerLink]="['/edit-game', game._id]">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
     <ul class="pagination pagination-lg">
         <li class="page-item" [ngClass]="{'disabled': currentPage == 0}">
             <a class="page-link" (click)="getPrevious()">&laquo;</a>
@@ -54,4 +68,4 @@
             <a class="page-link" (click)="getNext()">&raquo;</a>
         </li>
     </ul>
-  </div>
+</div>

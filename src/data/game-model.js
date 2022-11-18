@@ -26,4 +26,21 @@ const gameSchema = mongoose.Schema({
     }
 });
 
+const userSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+});
+
 mongoose.model(process.env.GAME_MODEL, gameSchema, process.env.GAMES_COLLECTION);
+mongoose.model(process.env.USER_MODEL, userSchema, process.env.USERS_COLLECTION);

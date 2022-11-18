@@ -1,12 +1,19 @@
 const { Router } = require('express');
 const router = Router();
 const gamesController = require('../controller/games.controller');
+const usersController = require('../controller/users.controller');
 const platformsController = require('../controller/platforms.controller');
-console.log('here-3');
+
 router.route('/games')
     .get(gamesController.getGames)
     .post(gamesController.addgame);
-    console.log('here-4');
+
+router.route('/users')
+    .post(usersController.register);
+
+router.route('/user')
+    .post(usersController.login1);
+
 router.route('/games/:gameId')
     .get(gamesController.getGame)
     .put(gamesController.fullUpdateGame)

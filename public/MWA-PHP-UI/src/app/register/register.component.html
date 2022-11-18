@@ -1,0 +1,27 @@
+<div class="register">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="form-group">
+            <label class="form-label mt-4" for="inputValid">Name</label>
+            <input type="text"  class="form-control " id="inputValid" formControlName="name">
+            <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="inputValid">Username</label>
+            <input type="text"  class="form-control" id="inputValid" formControlName="username">
+            <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="inputValid">Password</label>
+            <input type="text"  class="form-control" id="inputValid" formControlName="password">
+            <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+        </div><br>
+        <!-- <div class="form-group">
+            <label class="form-label mt-4" for="inputInvalid">Invalid input</label>
+            <input type="text"  class="form-control" id="inputInvalid">
+            <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+        </div> -->
+        <div class="form-group">
+            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Register</button>
+        </div>
+    </form>
+</div>

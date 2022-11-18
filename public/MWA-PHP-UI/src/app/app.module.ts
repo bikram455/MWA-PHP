@@ -15,6 +15,7 @@ import { AddPlatformComponent } from './add-platform/add-platform.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
 import { EditPlatformComponent } from './edit-platform/edit-platform.component';
 import { PlatformsComponent } from './platforms/platforms.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PlatformsComponent } from './platforms/platforms.component';
     AddPlatformComponent,
     EditGameComponent,
     EditPlatformComponent,
-    PlatformsComponent
+    PlatformsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -38,6 +38,11 @@ export class GamesService {
     const url = `${this.#baseUrl}games/${gameId}`;
     return this._http.patch(url, game) as  Observable<any>;
   }
+
+  searchGames(title: string): Observable<GamesData> {
+    const url = `${this.#baseUrl}games?title=${title}`;
+    return this._http.get(url) as Observable<GamesData>;
+  }
 }
 
 export class GamesData {
@@ -68,21 +73,29 @@ export class Game {
   #name!: string;
   #publisher!: string;
   #platforms!: Platform[];
+  #editName!: boolean;
+  #editPublisher!: boolean;
 
   get _id(): string {return this.#_id}
   get name(): string {return this.#name}
   get publisher(): string {return this.#publisher}
   get platforms(): Platform[] {return this.#platforms}
+  get editName(): boolean {return this.#editName}
+  get editPublisher(): boolean {return this.#editPublisher}
 
   set _id(id: string) {this.#_id = id}
   set name(name: string) {this.#name = name}
   set publisher(publisher: string) {this.#publisher = publisher}
   set platforms(platforms: Platform[]) {this.#platforms = platforms}
+  set editName(editName: boolean) {this.#editName = editName}
+  set editPublisher(editPublisher: boolean) {this.#editPublisher = editPublisher}
 
   constructor(id: string, name: string, publisher: string, platforms: Platform[]) {
     this.#_id = id;
     this.#name = name;
-    this.#publisher = publisher
+    this.#publisher = publisher;
     this.#platforms = platforms;
+    this.#editName =false;
+    this.#editPublisher = false;
   }
 }

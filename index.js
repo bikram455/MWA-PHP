@@ -9,9 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', function(req, res, next) {
-    console.log(req.method, req.url);
-    // res.header("Access-Control-Allow-Origin", ['*']);
-    // res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    console.log(req.method, req.url, new Date());
     res.append('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, PATCH');
     res.append('Access-Control-Allow-Headers', 'Content-Type');
