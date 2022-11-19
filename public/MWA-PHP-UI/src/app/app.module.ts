@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -16,6 +16,10 @@ import { EditGameComponent } from './edit-game/edit-game.component';
 import { EditPlatformComponent } from './edit-platform/edit-platform.component';
 import { PlatformsComponent } from './platforms/platforms.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { JWT_OPTIONS, JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { RequestInterceptor } from './request-interceptor';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,16 +34,23 @@ import { RegisterComponent } from './register/register.component';
     EditGameComponent,
     EditPlatformComponent,
     PlatformsComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // JwtModule
   ],
-  providers: [],
+  providers: [
+    JwtHelperService,
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

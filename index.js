@@ -12,7 +12,7 @@ app.use('/api', function(req, res, next) {
     console.log(req.method, req.url, new Date());
     res.append('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, PATCH');
-    res.append('Access-Control-Allow-Headers', 'Content-Type');
+    res.append('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
     next();
 });
 

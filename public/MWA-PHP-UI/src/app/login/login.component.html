@@ -1,0 +1,15 @@
+<div>
+    <ng-container *ngIf="!loggedIn">
+        <form class="d-flex" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+            <input class="form-control me-sm-2" name="username" placeholder="Username" required
+                [(ngModel)]="user.username">
+            <input class="form-control me-sm-2" type="password" name="password" placeholder="Password" required
+                [(ngModel)]="user.password">
+            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Log In</button>
+        </form>
+    </ng-container>
+    <ng-container *ngIf="loggedIn">
+        <span style="margin-right: 20px;">Welcome {{username}} </span>
+        <a (click)="logOut()" style="color: red;">Log Out</a>
+    </ng-container>
+</div>

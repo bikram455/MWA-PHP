@@ -69,9 +69,9 @@ gamesController.getGames = function(req, res) {
         offset = parseInt(req.query.offset);
     }
     if(req.query && req.query.title) {
-        query = {name: req.query.title};
+        query.name = new RegExp(`${req.query.title}`, 'i');
     }
-    if(response.status === process.env.SUCCESS_STATUS_CODE) {
+    if(response.status === process.env.SUCCESS_STATUS_CODE) {console.log(query)
         const gamesPromise = Game.find(query).skip(offset).limit(count).collation({'locale':'en'}).sort({name: 1}).exec();
         const countPromise = Game.find(query).count();
         Promise.all([gamesPromise, countPromise]).then((data) => _sendGames(response, data))

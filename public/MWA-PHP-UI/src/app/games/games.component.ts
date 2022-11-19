@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Game, GameData, GamesService } from '../games.service';
+import { Game, GameData, GamesData, GamesService } from '../games.service';
 
 @Component({
   selector: 'app-games',
@@ -28,9 +28,8 @@ export class GamesComponent implements OnInit {
     });
   }
 
-  fetchGames() {
-    this._gamesService.fetchGames(this.currentPage).subscribe(res => {
-      this.games = res['data'];
+  _paintGames(res: GamesData): void {
+    this.games = res['data'];
       this.totalPages = parseInt((res['count'] / 5).toString());
       if(res['count'] % 5 == 0) {
         --this.totalPages;
@@ -38,6 +37,11 @@ export class GamesComponent implements OnInit {
       for(let i = 0; i <= this.totalPages; i++) {
         this.pages[i] = i + 1;
       }
+  }
+
+  fetchGames() {
+    this._gamesService.fetchGames(this.currentPage).subscribe(res => {
+      this._paintGames(res);
     }, err => {
       console.error(err);
     });
@@ -128,13 +132,13 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  search() {
+  search() {console.log(this.searchForm.value, this.searchForm.valid)
     if(this.searchForm.invalid) {
       return;
     }
     this._gamesService.searchGames(this.searchForm.value.title).subscribe({
       next: (res) => {
-
+        this._paintGames(res);
       },
       error: (err) => {
         console.error(err);

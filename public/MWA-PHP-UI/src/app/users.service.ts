@@ -6,20 +6,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
-  #baseUrl: string = 'http://localhost:3000/api/';
+  #baseUrl: string = 'http://localhost:3000/api/users/';
   constructor(private _http: HttpClient) { }
 
-  login(user: Object): Observable<User> {
-    const url = `${this.#baseUrl}user`
-    return this._http.post(url, user) as Observable<User>;
+  login(user: Object): Observable<UserData> {
+    const url = `${this.#baseUrl}login`
+    return this._http.post(url, user) as Observable<UserData>;
   }
 
   register(user: Object): Observable<User> {
-    const url = `${this.#baseUrl}users`
+    const url = `${this.#baseUrl}register`
     return this._http.post(url, user) as Observable<User>;
   }
 }
-
+class UserData {
+  #data!: User;
+  get data(): User { return this.#data}
+}
 export class User {
   #name!: string;
   #token!: string;

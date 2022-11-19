@@ -3,21 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Game</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideAddGameModal()">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="hideAddGameModal()">
                     <span aria-hidden="true"></span>
                 </button>
             </div>
             <app-add-game (hideModal)="hideAddGameModal()"></app-add-game>
         </div>
     </div>
-</div>
-<div>
-    <button type="button" class="btn btn-success" (click)="showAddGameModal()">Add New Game</button>
-    <form [formGroup]="searchForm" (ngSubmit)="search()">
-        <div class="form-group">
-            <input type="text"  class="form-control " id="inputValid" formControlName="title" placeholder="Game Title">
-        </div>
-    </form>
 </div>
 <div class="table-container">
     <table class="table table-hover">
@@ -42,7 +35,8 @@
                 </th>
                 <th scope="row">
                     <span *ngIf="!game.editPublisher" (click)="showEditPublisher(game)">{{game.publisher}}</span>
-                    <form #publisherForm="ngForm" (ngSubmit)="editGamePublisher(publisherForm, game)" *ngIf="game.editPublisher">
+                    <form #publisherForm="ngForm" (ngSubmit)="editGamePublisher(publisherForm, game)"
+                        *ngIf="game.editPublisher">
                         <input name="publisher" [(ngModel)]="editGamebody.publisher">
                         <button type="button" class="btn btn-danger" (click)="hideEditPublisher(game)">Cancel</button>
                         <button class="btn btn-primary">Edit</button>
@@ -50,7 +44,8 @@
                 </th>
                 <td><button type="button" class="btn btn-danger" (click)="deleteGame(game._id)">Delete</button></td>
                 <td><button type="button" class="btn btn-primary" [routerLink]="['/game', game._id]">View</button></td>
-                <td><button type="button" class="btn btn-primary" [routerLink]="['/edit-game', game._id]">Edit</button></td>
+                <td><button type="button" class="btn btn-primary" [routerLink]="['/edit-game', game._id]">Edit</button>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -69,3 +64,15 @@
         </li>
     </ul>
 </div>
+
+
+<!-- <div>
+    <button type="button" class="btn btn-success" (click)="showAddGameModal()">Add New Game</button>
+    <div class="register">
+        <form [formGroup]="searchForm" (ngSubmit)="search()">
+            <div class="form-group">
+                <input type="text"  class="form-control " id="inputValid" formControlName="title" placeholder="Game Title">
+            </div>
+        </form>
+    </div>
+</div> -->

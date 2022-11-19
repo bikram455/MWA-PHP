@@ -16,17 +16,13 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/games">Games</a>
           </li>
+          <li class="nav-item" *ngIf="loggedIn">
+            <a class="nav-link" routerLink="/profile">Profile</a>
+          </li>
           <li class="nav-item" *ngIf="!loggedIn">
             <a class="nav-link" routerLink="/register">Register</a>
           </li>
         </ul>
-        <ng-container *ngIf="!loggedIn">
-          <form class="d-flex" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-            <input class="form-control me-sm-2" name="username" placeholder="Username" required [(ngModel)]="user.username">
-            <input class="form-control me-sm-2" type="password" name="password" placeholder="Password" required [(ngModel)]="user.password">
-            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Log In</button>
-          </form>
-        </ng-container>
         <!-- <div class="nav-item dropdown"> -->
         <!-- <div class="d-flex">
           <a class="nav-link dropdown-toggle">Dropdown</a>
@@ -36,7 +32,19 @@
             <a class="dropdown-item" >Log Out</a>
           </div>
         </div> -->
-        
+
+        <app-login></app-login>
+        <!-- <ng-container *ngIf="!loggedIn">
+          <form class="d-flex" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+            <input class="form-control me-sm-2" name="username" placeholder="Username" required [(ngModel)]="user.username">
+            <input class="form-control me-sm-2" type="password" name="password" placeholder="Password" required [(ngModel)]="user.password">
+            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Log In</button>
+          </form>
+        </ng-container>
+        <ng-container *ngIf="loggedIn">
+          <p>Welcome {{username}}</p>
+          <a>Log Out</a>
+        </ng-container> -->
       </div>
     </div>
   </nav>
