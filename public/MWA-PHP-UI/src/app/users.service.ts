@@ -18,6 +18,11 @@ export class UsersService {
     const url = `${this.#baseUrl}register`
     return this._http.post(url, user) as Observable<User>;
   }
+
+  fetchUser(username: string): Observable<User> {
+    const url = `${this.#baseUrl}${username}`;
+    return this._http.get(url) as Observable<User>;
+  }
 }
 class UserData {
   #data!: User;

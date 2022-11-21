@@ -4,13 +4,14 @@ const User = mongoose.model(process.env.USER_MODEL);
 const systemUtils = require('../utilities/system.utils');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const USERS_CONSTANTS = require('../constants/users.constants');
 
 const _checkUserExists = function(response, user) {
     return new Promise((resolve, reject) => {
         if(user) {
             resolve(user);
         } else {
-            reject('Username or password invalid!');
+            reject(USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
         }
     })
 }
@@ -22,7 +23,7 @@ const _checkPassword = function(response, password, user) {
             if(passwordMatch) {
                 resolve(user);
             } else {
-                reject('Username or password invalid!');
+                reject(USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
             }
         })
         .catch((err) => reject(err));
@@ -48,7 +49,22 @@ usersController.login1 = function(req, res) {
         .catch((err) =>systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err))
         .finally(() => systemUtils.sendResponse(res, response));
     } else {
-        systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, 'Username or password invalid!');
+        systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
+        systemUtils.sendResponse(res, response)
+    }
+}
+
+usersController.getUser = function(req, res) {
+    const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE);
+    if(req.params && req.params.username) {
+        const query = {username: req.params.username};
+        User.findOne(query).exec()
+        .then((user) => _checkUserExists(response, user))
+        .then((user) => response.body = user)
+        .catch((err) =>systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err))
+        .finally(() => systemUtils.sendResponse(res, response));
+    } else {
+        systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
         systemUtils.sendResponse(res, response)
     }
 }
@@ -57,7 +73,7 @@ const _getHash = function(password, salt) {
     return new Promise((resolve, reject) => {
         bcrypt.hash(password, salt)
         .then((hash) => resolve(hash))
-        .catch((err) => reject('Error while generating hash'));
+        .catch((err) => reject(USERS_CONSTANTS.HASH_GENERATION_ERROR));
     });
 }
 
@@ -69,10 +85,10 @@ const _saveUser = function(req, hash) {
             password: hash
         };
         User.create(user)
-        .then((user) => resolve('user registered successfully!'))
+        .then((user) => resolve(USERS_CONSTANTS.USER_REGISTER_SUCCESS))
         .catch((err) => {
             if(err['keyPattern'] && err['keyPattern']['username'] === 1) {
-                reject('Username already taken!')
+                reject(USERS_CONSTANTS.USERNAME_TAKEN)
             } else {
                 reject(err);
             }
@@ -85,11 +101,11 @@ usersController.register = function(req, res) {
     if(req.body && req.body.name && req.body.password && req.body.username) {
         bcrypt.genSalt(10).then((salt) => _getHash(req.body.password, salt))
         .then((hash) => _saveUser(req, hash))
-        .then((message) => response.body = {message: 'user registered successfully!'})
+        .then((message) => response.body = {message: USERS_CONSTANTS.USER_REGISTER_SUCCESS})
         .catch((err) => systemUtils.setError(response, (process.env.INTERNAL_SERVER_ERROR_STATUS_CODE), err))
         .finally(() => systemUtils.sendResponse(res, response));
     } else {
-        systemUtils.setError(response, (process.env.BAD_REQUEST_STATUS_CODE), 'User body invalid!');
+        systemUtils.setError(response, (process.env.BAD_REQUEST_STATUS_CODE), USERS_CONSTANTS.USER_BODY_INVALID);
         systemUtils.sendResponse(res, response);
     }
 }

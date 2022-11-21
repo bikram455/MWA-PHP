@@ -1,50 +1,65 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">
-        <img src="./assets/images/android-chrome-512x512.png" height="50" alt="MIU Compro" />
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link active" routerLink="/">Home
-              <span class="visually-hidden">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/games">Games</a>
-          </li>
-          <li class="nav-item" *ngIf="loggedIn">
-            <a class="nav-link" routerLink="/profile">Profile</a>
-          </li>
-          <li class="nav-item" *ngIf="!loggedIn">
-            <a class="nav-link" routerLink="/register">Register</a>
-          </li>
-        </ul>
-        <!-- <div class="nav-item dropdown"> -->
-        <!-- <div class="d-flex">
-          <a class="nav-link dropdown-toggle">Dropdown</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" >Profile</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" >Log Out</a>
-          </div>
-        </div> -->
-
-        <app-login></app-login>
-        <!-- <ng-container *ngIf="!loggedIn">
-          <form class="d-flex" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-            <input class="form-control me-sm-2" name="username" placeholder="Username" required [(ngModel)]="user.username">
-            <input class="form-control me-sm-2" type="password" name="password" placeholder="Password" required [(ngModel)]="user.password">
-            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Log In</button>
-          </form>
-        </ng-container>
-        <ng-container *ngIf="loggedIn">
-          <p>Welcome {{username}}</p>
-          <a>Log Out</a>
-        </ng-container> -->
+  <div class="container-fluid header-container">
+  <div class="container">
+    <div class="row">
+      <!-- <div class="col-md-1">
+        <a class="navbar-brand" routerLink="/">
+          <img src="./assets/images/android-chrome-512x512.png" height="50" alt="MIU Compro" />
+        </a>
+      </div> -->
+      <div class=" row col-md-7 nav-bar">
+        <div class="col-md-1">
+          <a class="navbar-brand" routerLink="/">
+            <img src="./assets/images/android-chrome-512x512.png" height="50" alt="MIU Compro" />
+          </a>
+        </div>
+        <div class="col-md-6">
+          <ul>
+            <li>
+              <a routerLink="/">Home
+                <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
+            <li >
+              <a routerLink="/games">Games</a>
+            </li>
+            <li  *ngIf="loggedIn">
+              <a routerLink="/profile">Profile</a>
+            </li>
+            <li  *ngIf="!loggedIn">
+              <a routerLink="/register">Register</a>
+            </li>
+          </ul>
+        </div>
+        
       </div>
+      <div class="col-md-5">
+        <app-login></app-login>
+      </div>
+      <!-- <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">
+          <img src="./assets/images/android-chrome-512x512.png" height="50" alt="MIU Compro" />
+        </a>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/">Home
+                <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/games">Games</a>
+            </li>
+            <li class="nav-item" *ngIf="loggedIn">
+              <a class="nav-link" routerLink="/profile">Profile</a>
+            </li>
+            <li class="nav-item" *ngIf="!loggedIn">
+              <a class="nav-link" routerLink="/register">Register</a>
+            </li>
+          </ul>
+  
+          <app-login></app-login>
+        </div>
+      </div> -->
     </div>
-  </nav>
+  </div>
+</div>

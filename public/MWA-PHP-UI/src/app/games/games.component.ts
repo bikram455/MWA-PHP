@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AuthenticationService } from '../authentication.service';
 import { Game, GameData, GamesData, GamesService } from '../games.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class GamesComponent implements OnInit {
   @ViewChild('publisherForm')
   publisherForm!: NgForm;
   searchForm!: FormGroup;
-  constructor(private _gamesService: GamesService, private _formBuilder: FormBuilder) { }
+  get loggedIn(): boolean {return this._auth.isLoggedIn}
+  constructor(private _gamesService: GamesService, private _formBuilder: FormBuilder, private _auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.fetchGames();

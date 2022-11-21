@@ -12,6 +12,8 @@ export class AddGameComponent implements OnInit {
   addGameForm!: FormGroup
   @Output()
   hideModal = new EventEmitter<void>;
+  @Output()
+  fetchGames = new EventEmitter<void>;
   constructor(private _formBuilder: FormBuilder, private _gamesService: GamesService, private _router: Router) {
     this._initializeForm();
   }
@@ -39,6 +41,7 @@ export class AddGameComponent implements OnInit {
 
   closeModal() {
     this._initializeForm();
+    this.fetchGames.emit();
     this.hideModal.emit();
   }
 }

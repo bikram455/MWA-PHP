@@ -6,7 +6,7 @@ systemUtils.isObjectEmpty = function(data) {
 
 systemUtils.getResponse = function(status, message) {
     return {
-        status,
+        status: status || process.env.SUCCESS_STATUS_CODE,
         body: {message}
     };
 }

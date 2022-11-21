@@ -9,7 +9,8 @@ router.route('/')
     .post(gamesController.addgame);
 
 router.route('/:gameId')
-    .get(authController.authenticate, gamesController.getGame)
+    // .get(authController.authenticate, gamesController.getGame)
+    .get(gamesController.getGame)
     .put(gamesController.fullUpdateGame)
     .patch(gamesController.partialUpdateGame)
     .delete(gamesController.deleteGame);

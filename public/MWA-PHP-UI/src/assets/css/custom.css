@@ -4,7 +4,7 @@
 
 .table-container {
     min-height: 330px;
-    margin: 20px 50px
+    /* margin: 20px 50px */
 }
 .log-in-button {
     width: 135px;
@@ -23,4 +23,18 @@
 .register {
     width: 50%;
     margin: auto;
+}
+
+.header-container{
+    background-color: #154c79
+}
+.nav-bar ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 5px 10px
+}
+
+.nav-bar a{
+    text-decoration: none;
+    color: azure;
 }
