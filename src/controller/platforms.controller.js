@@ -58,7 +58,7 @@ const _addPlatform = function (req, res, response) {
             game.platforms.push(platform);
             _saveGame(game, platform);
         })
-        .then(game => response.status = 201)
+        .then(game => response.status = process.env.CREATE_SUCCESS_STATUS_CODE)
         .catch(err => systemUtils.setError(response, err.status, err.error))
         .finally(() => systemUtils.sendResponse(res, response));
 }
@@ -151,7 +151,7 @@ platformController.partialUpdatePlatform = function (req, res) {
     dbUtils.setErrorForInvalidGameId(req.params.gameId, response, GAME_CONSTANTS.GAME);
     dbUtils.setErrorForInvalidPlatformId(req.params.platformId, response);
     if (response.status === process.env.SUCCESS_STATUS_CODE) {
-        if (!systemUtils.isObjectEmpty(req.body) && ((req.body.name && typeof (req.body.name) == 'string') || (req.body.year && typeof (req.body.year) == 'number'))) {
+        if (!systemUtils.isObjectEmpty(req.body) && ((req.body.name && typeof (req.body.name) == SYSTEM_CONSTANTS.STRING) || (req.body.year && typeof (req.body.year) == SYSTEM_CONSTANTS.NUMBER))) {
 
             _updatePlatform(req, res, response);
         } else {

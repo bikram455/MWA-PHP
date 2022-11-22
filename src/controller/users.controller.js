@@ -1,29 +1,29 @@
 const usersController = {};
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model(process.env.USER_MODEL);
 const systemUtils = require('../utilities/system.utils');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const USERS_CONSTANTS = require('../constants/users.constants');
 
-const _checkUserExists = function(response, user) {
+const _checkUserExists = function(user) {
     return new Promise((resolve, reject) => {
         if(user) {
             resolve(user);
         } else {
-            reject(USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
+            reject({status: process.env.BAD_REQUEST_STATUS_CODE,  error: USERS_CONSTANTS.USERNAME_PASSWORD_INVALID});
         }
     })
 }
 
-const _checkPassword = function(response, password, user) {
+const _checkPassword = function(password, user) {
     return new Promise((resolve, reject) => {
         bcrypt.compare(password, user.password)
         .then((passwordMatch) => {
             if(passwordMatch) {
                 resolve(user);
             } else {
-                reject(USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
+                reject({status: process.env.BAD_REQUEST_STATUS_CODE,  error: USERS_CONSTANTS.USERNAME_PASSWORD_INVALID});
             }
         })
         .catch((err) => reject(err));
@@ -32,41 +32,10 @@ const _checkPassword = function(response, password, user) {
 
 const _generateToken = function(response, user) {
     const token = jwt.sign({name: user.username}, process.env.JWT_PASSWORD, {expiresIn: 3600});
-    const loggedInUser = user['_doc'];
+    const loggedInUser = user[process.env.DOCUMENT] || user;
     loggedInUser.token = token;
     delete(loggedInUser.password);
     response.body = {data: loggedInUser};
-}
-
-usersController.login1 = function(req, res) {
-    const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE);
-    if(req.body && req.body.password && req.body.username) {
-        const query = {username: req.body.username};
-        User.findOne(query).exec()
-        .then((user) => _checkUserExists(response, user))
-        .then((user) => _checkPassword(response, req.body.password, user))
-        .then((user) => _generateToken(response, user))
-        .catch((err) =>systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err))
-        .finally(() => systemUtils.sendResponse(res, response));
-    } else {
-        systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
-        systemUtils.sendResponse(res, response)
-    }
-}
-
-usersController.getUser = function(req, res) {
-    const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE);
-    if(req.params && req.params.username) {
-        const query = {username: req.params.username};
-        User.findOne(query).exec()
-        .then((user) => _checkUserExists(response, user))
-        .then((user) => response.body = user)
-        .catch((err) =>systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err))
-        .finally(() => systemUtils.sendResponse(res, response));
-    } else {
-        systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
-        systemUtils.sendResponse(res, response)
-    }
 }
 
 const _getHash = function(password, salt) {
@@ -87,8 +56,8 @@ const _saveUser = function(req, hash) {
         User.create(user)
         .then((user) => resolve(USERS_CONSTANTS.USER_REGISTER_SUCCESS))
         .catch((err) => {
-            if(err['keyPattern'] && err['keyPattern']['username'] === 1) {
-                reject(USERS_CONSTANTS.USERNAME_TAKEN)
+            if(err[process.env.KEY_PATTERN] && err[process.env.KEY_PATTERN][USERS_CONSTANTS.USERNAME] === 1) {
+                reject({status: process.env.DATA_EXISTS_STATUS_CODE , error: USERS_CONSTANTS.USERNAME_TAKEN})
             } else {
                 reject(err);
             }
@@ -96,13 +65,44 @@ const _saveUser = function(req, hash) {
     });
 }
 
-usersController.register = function(req, res) {
+usersController.login = function(req, res) {
     const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE);
+    if(req.body && req.body.password && req.body.username) {
+        const query = {username: req.body.username};
+        User.findOne(query).exec()
+        .then((user) => _checkUserExists(user))
+        .then((user) => _checkPassword(req.body.password, user))
+        .then((user) => _generateToken(response, user))
+        .catch((err) => systemUtils.setError(response, err.status || process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err.error || err))
+        .finally(() => systemUtils.sendResponse(res, response));
+    } else {
+        systemUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, USERS_CONSTANTS.USERNAME_PASSWORD_INVALID);
+        systemUtils.sendResponse(res, response)
+    }
+}
+
+usersController.getUser = function(req, res) {
+    const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE);
+    if(req.params && req.params.username) {
+        const query = {username: req.params.username};
+        User.findOne(query).exec()
+        .then((user) => _checkUserExists(user))
+        .then((user) => response.body = user)
+        .catch((err) =>systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err))
+        .finally(() => systemUtils.sendResponse(res, response));
+    } else {
+        systemUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, USERS_CONSTANTS.USERNAME_INVALID);
+        systemUtils.sendResponse(res, response)
+    }
+}
+
+usersController.register = function(req, res) {
+    const response = systemUtils.getResponse(process.env.CREATE_SUCCESS_STATUS_CODE);
     if(req.body && req.body.name && req.body.password && req.body.username) {
         bcrypt.genSalt(10).then((salt) => _getHash(req.body.password, salt))
         .then((hash) => _saveUser(req, hash))
-        .then((message) => response.body = {message: USERS_CONSTANTS.USER_REGISTER_SUCCESS})
-        .catch((err) => systemUtils.setError(response, (process.env.INTERNAL_SERVER_ERROR_STATUS_CODE), err))
+        .then(message => _generateToken(response, req.body))
+        .catch((err) => systemUtils.setError(response, err.status || process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err.error || err))
         .finally(() => systemUtils.sendResponse(res, response));
     } else {
         systemUtils.setError(response, (process.env.BAD_REQUEST_STATUS_CODE), USERS_CONSTANTS.USER_BODY_INVALID);

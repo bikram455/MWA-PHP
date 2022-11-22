@@ -10,9 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', function(req, res, next) {
     console.log(req.method, req.url, new Date());
-    res.append('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, PATCH');
-    res.append('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    res.append(process.env.ALLOW_ORIGIN, process.env.ALLOWED_APP);
+    res.append(process.env.ALLOW_METHODS, process.env.METHODS);
+    res.append(process.env.ALLOW_HEADERS, process.env.HEADERS);
     next();
 });
 

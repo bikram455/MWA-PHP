@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'The base url for the application to fetch data',
+  environment: 'this holds the name of the environment file being used in both production and environment.',
+  logging: 'If this is 0 we will log to the file, if this is 1 log to fb(this should not be defined in production)',
 };
 
 /*

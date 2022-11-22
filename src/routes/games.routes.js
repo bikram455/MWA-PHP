@@ -4,22 +4,21 @@ const gamesController = require('../controller/games.controller');
 const authController = require('../controller/authentication.controller');
 const platformsController = require('../controller/platforms.controller');
 
-router.route('/')
+router.route(process.env.ROOT_ROUTE)
     .get(gamesController.getGames)
     .post(gamesController.addgame);
 
-router.route('/:gameId')
-    // .get(authController.authenticate, gamesController.getGame)
+router.route(process.env.GAME_ROUTES)
     .get(gamesController.getGame)
     .put(gamesController.fullUpdateGame)
     .patch(gamesController.partialUpdateGame)
     .delete(gamesController.deleteGame);
 
-router.route('/:gameId/platforms')
+router.route(process.env.PLATFORMS_ROUTES)
     .get(platformsController.getPlatforms)
     .post(platformsController.addPlatform);
 
-router.route('/:gameId/platforms/:platformId')
+router.route(process.env.PLATFORM_ROUTES)
     .get(platformsController.getPlatform)
     .patch(platformsController.partialUpdatePlatform)
     .put(platformsController.fullUpdatePlatform)

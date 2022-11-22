@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../authentication.service';
 import { NavigateComponent } from '../navigate/navigate.component';
 import { UsersService } from '../users.service';
 
@@ -11,7 +12,7 @@ import { UsersService } from '../users.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
-  constructor(private _formBuilder: FormBuilder, private _usersService: UsersService, private _router: Router) { }
+  constructor(private _formBuilder: FormBuilder, private _usersService: UsersService, private _router: Router, private _auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
@@ -27,19 +28,12 @@ export class RegisterComponent implements OnInit {
     }
     this._usersService.register(this.registerForm.value).subscribe({
       next: (res)=> {
-        this._login();
+        this._auth.token = res['data']['token'];
+        this._router.navigate(['/games']);
       },
       error: (err) => {
         console.error(err);
       }
-    });
-  }
-  
-  _login(): void {
-    this._usersService.login(this.registerForm.value).subscribe(res => {
-      this._router.navigate(['/games']);
-    },err => {
-      console.error(err);
     });
   }
 

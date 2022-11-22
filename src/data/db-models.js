@@ -39,9 +39,9 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false
+        // select: false
     }
 });
-
 mongoose.model(process.env.GAME_MODEL, gameSchema, process.env.GAMES_COLLECTION);
-mongoose.model(process.env.USER_MODEL, userSchema, process.env.USERS_COLLECTION);
+const user = mongoose.model(process.env.USER_MODEL, userSchema, process.env.USERS_COLLECTION);
+user.createIndexes();

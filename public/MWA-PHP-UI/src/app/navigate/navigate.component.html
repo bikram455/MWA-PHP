@@ -15,18 +15,18 @@
         <div class="col-md-6">
           <ul>
             <li>
-              <a routerLink="/">Home
+              <a routerLink="/" [ngClass]="getClass('/')">Home
                 <span class="visually-hidden">(current)</span>
               </a>
             </li>
             <li >
-              <a routerLink="/games">Games</a>
+              <a routerLink="/games" [ngClass]="getClass('/games')">Games</a>
             </li>
             <li  *ngIf="loggedIn">
-              <a routerLink="/profile">Profile</a>
+              <a routerLink="/profile" [ngClass]="getClass('/profile')">Profile</a>
             </li>
             <li  *ngIf="!loggedIn">
-              <a routerLink="/register">Register</a>
+              <a routerLink="/register" [ngClass]="getClass('/register')">Register</a>
             </li>
           </ul>
         </div>

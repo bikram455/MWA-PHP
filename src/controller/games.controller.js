@@ -75,13 +75,12 @@ const _sendGames = function (response, data) {
 
 gamesController.getGames = function (req, res) {
     let offset = process.env.MIN_COUNT;
-    let count = 5;
-    // let count = process.env.MAX_COUNT;
+    let count = process.env.AVG_COUNT;
     const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE);
     const query = {};
     if (req.query && req.query.count) {
         count = parseInt(req.query.count);
-        if (count > parseInt(process.env.MAX_COUNT) || count <= parseInt(process.env.MIN_COUNT)) {
+        if (count > parseInt(process.env.MAX_COUNT) || count < parseInt(process.env.MIN_COUNT)) {
             systemUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, SYSTEM_CONSTANTS.COUNT_INVALID);
         }
     }
@@ -92,7 +91,7 @@ gamesController.getGames = function (req, res) {
         query.name = new RegExp(`${req.query.title}`, 'i');
     }
     if (response.status === process.env.SUCCESS_STATUS_CODE) {
-        const gamesPromise = Game.find(query).skip(offset).limit(count).collation({ 'locale': 'en' }).sort({ name: 1 }).exec();
+        const gamesPromise = Game.find(query).skip(offset).limit(count).collation({locale: process.env.LOCALE_EN }).sort({ name: 1 }).exec();
         const countPromise = Game.find(query).count();
         Promise.all([gamesPromise, countPromise]).then((data) => _sendGames(response, data))
             .catch((err) => systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err))
@@ -106,7 +105,7 @@ gamesController.getGame = function (req, res) {
     dbUtils.setErrorForInvalidGameId(req.params.gameId, response);
     if (req.body && response.status === process.env.SUCCESS_STATUS_CODE) {
         _getGameById(req.params.gameId)
-            .then(game => response.body = { data: game['_doc'] })
+            .then(game => response.body = { data: game[process.env.DOCUMENT] })
             .catch((err) => systemUtils.setError(response, err.status, err.error))
             .finally(() => systemUtils.sendResponse(res, response));
     } else {
@@ -115,9 +114,10 @@ gamesController.getGame = function (req, res) {
 }
 
 gamesController.addgame = function (req, res) {
-    const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE, GAME_CONSTANTS.GAME_ADD_SUCCESS);
+    const response = systemUtils.getResponse(process.env.CREATE_SUCCESS_STATUS_CODE, GAME_CONSTANTS.GAME_ADD_SUCCESS);
     if (!req.body.name || !req.body.publisher) {
         systemUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, GAME_CONSTANTS.GAME_VALIDATION_ERROR);
+        systemUtils.sendResponse(res, response);
     } else {
         const game = {
             name: req.body.name,
@@ -128,16 +128,17 @@ gamesController.addgame = function (req, res) {
             .catch((err) => systemUtils.setError(response, process.env.INTERNAL_SERVER_ERROR_STATUS_CODE, err))
             .finally(() => systemUtils.sendResponse(res, response));
     }
-    systemUtils.sendIfError(res, response);
 };
 
 gamesController.deleteGame = function (req, res) {
     const response = systemUtils.getResponse(process.env.SUCCESS_STATUS_CODE, GAME_CONSTANTS.GAME_DELETE_SUCCESS);
     dbUtils.setErrorForInvalidGameId(req.params.gameId, response);
     if (response.status === process.env.SUCCESS_STATUS_CODE) {
-        Game.deleteOne({ '_id': req.params.gameId }).exec()
+        const query = {};
+        query[process.env.ID] = req.params.gameId;
+        Game.deleteOne(query).exec()
             .then((success) => {
-                if (success['deletedCount'] === 0) {
+                if (success[process.env.DELETED_COUNT] === 0) {
                     systemUtils.setError(response, process.env.NOT_FOUND_STATUS_CODE, GAME_CONSTANTS.GAME_NOT_FOUND);
                 }
             })

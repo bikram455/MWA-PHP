@@ -4,8 +4,7 @@ const usersRoutes = require('./users.routes');
 
 const router = Router();
 
-router.use('/users', usersRoutes);
-
-router.use('/games', gamesRoutes);
+router.use(process.env.USERS_ROUTES, usersRoutes);
+router.use(process.env.GAMES_ROUTES, gamesRoutes);
 
 module.exports = router;

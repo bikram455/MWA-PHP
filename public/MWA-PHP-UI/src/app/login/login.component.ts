@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthenticationService } from '../authentication.service';
 import { User, UsersService } from '../users.service';
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   get loggedIn(): boolean { return this._auth.isLoggedIn }
 
 
-  constructor(private _usersService: UsersService, private _auth: AuthenticationService, private _jwt: JwtHelperService) { }
+  constructor(private _usersService: UsersService, private _auth: AuthenticationService, private _jwt: JwtHelperService, private _router: Router) { }
 
   ngOnInit(): void {
   }
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   logOut(): void {
+    this._router.navigate(['/']);
     this._auth.removeToken();
   }
 }

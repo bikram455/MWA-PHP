@@ -2,6 +2,7 @@ const authController = {};
 const util = require('util');
 const jwt = require('jsonwebtoken');
 const sysUtils = require('../utilities/system.utils');
+const USERS_CONSTANTS = require('../constants/users.constants');
 
 authController.authenticate = function(req, res, next) {
     const response = sysUtils.getResponse(process.env.SUCCESS_STATUS_CODE);
@@ -13,11 +14,11 @@ authController.authenticate = function(req, res, next) {
         jwtVerifyPromise(token, process.env.JWT_PASSWORD)
         .then(() => next())
         .catch((err) => {
-            sysUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, 'Invalid token provided!');
+            sysUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, USERS_CONSTANTS.INVALID_TOKEN);
             sysUtils.sendResponse(res, response);    
         });
     } else {
-        sysUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, 'No authentication header provided!');
+        sysUtils.setError(response, process.env.BAD_REQUEST_STATUS_CODE, USERS_CONSTANTS.NO_AUTHENTICATION_HEADER);
         sysUtils.sendResponse(res, response);
     }
 }

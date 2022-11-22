@@ -1,4 +1,4 @@
-require('./game-model');
+require('./db-models');
 const mongoose = require('mongoose');
 const SYSTEM_CONSTANTS = require('../constants/system.constants');
 

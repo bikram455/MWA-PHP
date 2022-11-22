@@ -2,45 +2,46 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Platform } from './platforms.service';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class GamesService {
-  #baseUrl: string = 'http://localhost:3000/api/'
+  // #baseUrl: string = 'http://localhost:3000/api/'
   constructor(private _http: HttpClient) { }
 
   fetchGames(page: number): Observable<GamesData> {
-    const url = `${this.#baseUrl}games?offset=${page * 5}`;
+    const url = `${environment.baseUrl}games?offset=${page * 5}`;
     return this._http.get(url) as Observable<GamesData>;
   }
 
   fetchGame(gameId: string): Observable<GameData> {
-    const url = `${this.#baseUrl}games/${gameId}`;
+    const url = `${environment.baseUrl}games/${gameId}`;
     return this._http.get(url) as Observable<GameData>;
   }
 
   addGame(game: Game): Observable<any> {
-    const url = `${this.#baseUrl}games`;
+    const url = `${environment.baseUrl}games`;
     return this._http.post(url, game) as  Observable<any>;
   }
 
   deleteGame(gameId: string): Observable<any> {
-    const url = `${this.#baseUrl}games/${gameId}`;
+    const url = `${environment.baseUrl}games/${gameId}`;
     return this._http.delete(url) as Observable<any>;
   }
 
   updateGame(gameId: string, game: Game): Observable<any> {
-    const url = `${this.#baseUrl}games/${gameId}`;
+    const url = `${environment.baseUrl}games/${gameId}`;
     return this._http.put(url, game) as  Observable<any>;
   }
 
   updateGamePartial(gameId:string, game: any): Observable<any> {
-    const url = `${this.#baseUrl}games/${gameId}`;
+    const url = `${environment.baseUrl}games/${gameId}`;
     return this._http.patch(url, game) as  Observable<any>;
   }
 
   searchGames(title: string): Observable<GamesData> {
-    const url = `${this.#baseUrl}games?title=${title}`;
+    const url = `${environment.baseUrl}games?title=${title}`;
     return this._http.get(url) as Observable<GamesData>;
   }
 }
