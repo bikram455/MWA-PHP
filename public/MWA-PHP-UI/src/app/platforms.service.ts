@@ -1,25 +1,26 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PlatformsService {
-  #baseUrl: string = 'http://localhost:3000/api/'
   constructor(private _http: HttpClient) { }
 
   deletePlatform(gameId: string, platformId: string): Observable<any> {
-    const url = `${this.#baseUrl}/games/${gameId}/platforms/${platformId}`;
+    const url = `${environment.baseUrl}${environment.gotogames}/${gameId}${environment.gotoPlatforms}/${platformId}`;
     return this._http.delete(url) as Observable<any>;
   }
 
   fetchPlatforms(gameId: string): Observable<PlatformData> {
-    const url = `${this.#baseUrl}/games/${gameId}/platforms`;
+    const url = `${environment.baseUrl}${environment.gotogames}/${gameId}${environment.gotoPlatforms}`;
     return this._http.get(url) as Observable<PlatformData>;
   } 
 
   addPlatform(gameId: string, platform: Platform): Observable<any> {
-    const url = `${this.#baseUrl}/games/${gameId}/platforms`;
+    const url = `${environment.baseUrl}${environment.gotogames}/${gameId}${environment.gotoPlatforms}`;
     const body = {
       name: platform.name,
       year: platform.year
@@ -28,12 +29,12 @@ export class PlatformsService {
   }
   
   updatePlatform(gameId: string, platformId: string, platform: Platform): Observable<any> {
-    const url = `${this.#baseUrl}/games/${gameId}/platforms/${platformId}`;
+    const url = `${environment.baseUrl}${environment.gotogames}/${gameId}${environment.gotoPlatforms}/${platformId}`;
     return this._http.put(url, platform) as Observable<any>;
   }
 
   updatePlatformPartial(gameId: string, platformId: string, platform: Platform): Observable<any> {
-    const url = `${this.#baseUrl}/games/${gameId}/platforms/${platformId}`;
+    const url = `${environment.baseUrl}${environment.gotogames}/${gameId}${environment.gotoPlatforms}/${platformId}`;
     return this._http.patch(url, platform) as Observable<any>;
   }
 }

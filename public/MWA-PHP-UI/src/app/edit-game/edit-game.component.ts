@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Game, GamesService } from '../games.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-edit-game',
   templateUrl: './edit-game.component.html',
@@ -23,7 +25,6 @@ export class EditGameComponent implements OnInit {
   fetchGames(): void {
     this._gameService.fetchGame(this.#gameId).subscribe(res => {
       this.game = res['data'];
-      
     }, err => {
       console.error(err);
     });
@@ -31,7 +32,7 @@ export class EditGameComponent implements OnInit {
 
   editGame(gameBody: NgForm): void {
     this._gameService.updateGame(this.#gameId, gameBody.value).subscribe(res => {
-      this.router.navigate(['/games']);
+      this.router.navigate([environment.gotogames]);
     }, err => {
       console.error(err);
     })

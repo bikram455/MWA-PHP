@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../authentication.service';
-import { NavigateComponent } from '../navigate/navigate.component';
 import { UsersService } from '../users.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../authentication.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -26,29 +26,21 @@ export class RegisterComponent implements OnInit {
 
   register(): void {
     if(this.registerForm.invalid) {
-      this.formError = 'Please fill all the fields!';
+      this.formError = environment.allFieldsRequired;
       return;
     }
     if(this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
-      this.formError = 'Password and confirm doesn\'t match!';
+      this.formError = environment.passwordDontMatch;
       return;
     }
     this._usersService.register(this.registerForm.value).subscribe({
       next: (res)=> {
-        this._auth.token = res['data']['token'];
-        this._router.navigate(['/games']);
+        this._auth.token = res.data.token;
+        this._router.navigate([environment.gotogames]);
       },
       error: (err) => {
         console.error(err);
       }
     });
   }
-
-  // getClassInput(): string{
-  //   return 'has-danger' : 'has-success';
-  // }
-
-    // getClassValid(): string {
-    //   return 'is-valid' : 'is-invalid';
-    // }
 }

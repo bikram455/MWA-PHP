@@ -1,8 +1,9 @@
 <div>
     <div *ngIf="!addPlatformVisible && !editFlag">
-        <button type="button" class="btn btn-success" (click)="toggleAddPlatformVisibility(true)" *ngIf="isLoggedIn">Add New Platform</button>
+        <button type="button" class="btn btn-success" (click)="toggleAddPlatformVisibility(true)" *ngIf="isLoggedIn">Add
+            New Platform</button>
     </div>
-    <table class="table table-hover platforms-wrapper" >
+    <table class="table table-hover platforms-wrapper">
         <ng-container *ngIf="!showTable()">
             <thead>
                 <tr class="table-primary">
@@ -23,27 +24,34 @@
                 <tr *ngFor="let platform of platforms; let i = index" [ngClass]="getRowClass(i)">
                     <th scope="row">
                         <span *ngIf="!platform.editName" (click)="showEditName(platform)">{{platform.name}}</span>
-                        <form #editNameForm="ngForm" *ngIf="platform.editName" (ngSubmit)="updatePlatformName(editNameForm, platform)">
+                        <form #editNameForm="ngForm" *ngIf="platform.editName"
+                            (ngSubmit)="updatePlatformName(editNameForm, platform)">
                             <input name="name" [(ngModel)]="platform.updatedName">
-                            <button type="button" (click)="hideEditName(platform)">Cancel</button>
-                            <button>Edit</button>
+                            <button type="button" (click)="hideEditName(platform)"
+                                class="btn btn-danger">Cancel</button>
+                            <button class="btn btn-primary">Edit</button>
                         </form>
                     </th>
                     <th scope="row">
                         <span *ngIf="!platform.editYear" (click)="showEditYear(platform)">{{platform.year}}</span>
-                        <form #editYearForm="ngForm" *ngIf="platform.editYear" (ngSubmit)="updatePlatformReleasedYear(editYearForm, platform)">
+                        <form #editYearForm="ngForm" *ngIf="platform.editYear"
+                            (ngSubmit)="updatePlatformReleasedYear(editYearForm, platform)">
                             <input name="year" type="number" [(ngModel)]="platform.updatedYear">
-                            <button type="button" (click)="hideEditYear(platform)">Cancel</button>
-                            <button>Edit</button>
+                            <button type="button" (click)="hideEditYear(platform)"
+                                class="btn btn-danger">Cancel</button>
+                            <button class="btn btn-primary">Edit</button>
                         </form>
                     </th>
-                    <td><button type="button" class="btn btn-danger" (click)="deletePlatform(platform._id)" *ngIf="isLoggedIn">Delete</button></td>
-                    <td><button type="button" class="btn btn-primary" (click)="showEdit(platform)"  *ngIf="isLoggedIn">Edit</button></td>
+                    <td><button type="button" class="btn btn-danger" (click)="deletePlatform(platform._id)"
+                            *ngIf="isLoggedIn">Delete</button></td>
+                    <td><button type="button" class="btn btn-primary" (click)="showEdit(platform)"
+                            *ngIf="isLoggedIn">Edit</button></td>
                 </tr>
             </tbody>
         </ng-container>
     </table>
     <div *ngIf="addPlatformVisible">
-        <app-add-platform [gameId]="gameId" (reloadPlatforms)="fetchPlatforms()" (hideAddPlatform)="toggleAddPlatformVisibility($event)"></app-add-platform>
+        <app-add-platform [gameId]="gameId" (reloadPlatforms)="fetchPlatforms()"
+            (hideAddPlatform)="toggleAddPlatformVisibility($event)"></app-add-platform>
     </div>
 </div>

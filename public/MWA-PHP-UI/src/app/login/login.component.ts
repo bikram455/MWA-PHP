@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../authentication.service';
 import { User, UsersService } from '../users.service';
 
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
     }
     this._usersService.login(login.value).subscribe({
       next: (res) => {
-        this._auth.token = res['data']['token'];
+        this._auth.token = res.data.token;
         this.username = this._auth.name;
         this._resetForm();
       }, 

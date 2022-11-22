@@ -4,6 +4,7 @@
 
 .table-container {
     min-height: 330px;
+    margin-top: 15px;
     /* margin: 20px 50px */
 }
 .log-in-button {

@@ -14,7 +14,8 @@
         </div>
     </div>
     <div class="col-md-3">
-        <button type="button" class="btn btn-success" (click)="showAddGameModal()" *ngIf="loggedIn">Add New Game</button>
+        <button type="button" class="btn btn-success" (click)="showAddGameModal()" *ngIf="loggedIn">Add New
+            Game</button>
     </div>
     <div class="table-container">
         <table class="table table-hover">
@@ -42,19 +43,23 @@
                         <form #publisherForm="ngForm" (ngSubmit)="editGamePublisher(publisherForm, game)"
                             *ngIf="game.editPublisher">
                             <input name="publisher" [(ngModel)]="editGamebody.publisher">
-                            <button type="button" class="btn btn-danger" (click)="hideEditPublisher(game)">Cancel</button>
+                            <button type="button" class="btn btn-danger"
+                                (click)="hideEditPublisher(game)">Cancel</button>
                             <button class="btn btn-primary">Edit</button>
                         </form>
                     </th>
-                    <td><button type="button" class="btn btn-danger" (click)="deleteGame(game._id)" *ngIf="loggedIn">Delete</button></td>
-                    <td><button type="button" class="btn btn-primary" [routerLink]="['/game', game._id]">View</button></td>
-                    <td><button type="button" class="btn btn-primary" [routerLink]="['/edit-game', game._id]" *ngIf="loggedIn">Edit</button>
+                    <td><button type="button" class="btn btn-danger" (click)="deleteGame(game._id)"
+                            *ngIf="loggedIn">Delete</button></td>
+                    <td><button type="button" class="btn btn-primary" [routerLink]="['/game', game._id]">View</button>
+                    </td>
+                    <td><button type="button" class="btn btn-primary" [routerLink]="['/edit-game', game._id]"
+                            *ngIf="loggedIn">Edit</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    
+
     <div>
         <ul class="pagination pagination-lg">
             <li class="page-item" [ngClass]="{'disabled': currentPage == 0}">
@@ -69,14 +74,3 @@
         </ul>
     </div>
 </div>
-
-<!-- <div>
-    <button type="button" class="btn btn-success" (click)="showAddGameModal()">Add New Game</button>
-    <div class="register">
-        <form [formGroup]="searchForm" (ngSubmit)="search()">
-            <div class="form-group">
-                <input type="text"  class="form-control " id="inputValid" formControlName="title" placeholder="Game Title">
-            </div>
-        </form>
-    </div>
-</div> -->
