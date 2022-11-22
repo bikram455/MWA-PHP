@@ -30,7 +30,6 @@ export class AddGameComponent implements OnInit {
   }
 
   addGame() {
-    console.log(this.addGameForm.value);
     this._gamesService.addGame(this.addGameForm.value).subscribe(res => {
       this._router.navigate(['games']);
       this.closeModal();

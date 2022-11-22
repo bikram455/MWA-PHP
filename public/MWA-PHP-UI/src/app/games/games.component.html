@@ -1,4 +1,4 @@
-<div class="row">
+<div class="col-md-9 component-wrapper">
     <div class="modal" [ngClass]="{'my-modal': showModal}">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <button type="button" class="btn btn-success" (click)="showAddGameModal()">Add New Game</button>
+        <button type="button" class="btn btn-success" (click)="showAddGameModal()" *ngIf="loggedIn">Add New Game</button>
     </div>
     <div class="table-container">
         <table class="table table-hover">

@@ -90,12 +90,10 @@ export class GamesComponent implements OnInit {
   }
 
   editGameName(nameForm: NgForm, game: Game): void {
-    console.log(nameForm.value)
     this._updateGamePartial(game._id, nameForm.value);
   }
 
   editGamePublisher(publisherForm: NgForm, game: Game): void {
-    console.log(publisherForm.value)
     this._updateGamePartial(game._id, publisherForm.value);
   }
 
@@ -111,9 +109,11 @@ export class GamesComponent implements OnInit {
   }
 
   showEditName(game: Game): void {
-    this.editGamebody = game;
-    this._hideAll();
-    game.editName = true;
+    if(this.loggedIn) {
+      this.editGamebody = game;
+      this._hideAll();
+      game.editName = true;
+    }
   }
 
   hideEditPublisher(game: Game) {
@@ -121,9 +121,11 @@ export class GamesComponent implements OnInit {
   }
 
   showEditPublisher(game: Game): void {
-    this.editGamebody = game;
-    this._hideAll();
-    game.editPublisher = true;
+    if(this.loggedIn){
+      this.editGamebody = game;
+      this._hideAll();
+      game.editPublisher = true;
+    }
   }
 
   getRowClass(index: number): string {
@@ -134,7 +136,7 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  search() {console.log(this.searchForm.value, this.searchForm.valid)
+  search() {
     if(this.searchForm.invalid) {
       return;
     }

@@ -16,8 +16,7 @@ export class EditGameComponent implements OnInit {
   constructor(private _route: ActivatedRoute, private _gameService: GamesService, private router: Router) { }
 
   ngOnInit(): void {
-    this.#gameId = this._route.snapshot.url[1].path;
-    console.log('The game id is: ', this.#gameId);
+    this.#gameId = this._route.snapshot.params['gameId'];
     this.fetchGames();
   }
 

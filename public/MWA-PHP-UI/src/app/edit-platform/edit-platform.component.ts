@@ -27,7 +27,6 @@ export class EditPlatformComponent implements OnInit {
   }
 
   editPlatform(): void {
-    console.log(this.editForm.value);
     this._platformService.updatePlatform(this.gameId, this.platform._id, this.editForm.value).subscribe(res => {
       this.cancelEdit();
       this.reloadPlatforms.emit();

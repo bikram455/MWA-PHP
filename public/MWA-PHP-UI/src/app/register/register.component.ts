@@ -12,18 +12,25 @@ import { UsersService } from '../users.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
+  formError!: string;
   constructor(private _formBuilder: FormBuilder, private _usersService: UsersService, private _router: Router, private _auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
       name: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
   }
 
   register(): void {
     if(this.registerForm.invalid) {
+      this.formError = 'Please fill all the fields!';
+      return;
+    }
+    if(this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
+      this.formError = 'Password and confirm doesn\'t match!';
       return;
     }
     this._usersService.register(this.registerForm.value).subscribe({

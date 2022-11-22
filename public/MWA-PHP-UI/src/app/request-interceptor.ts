@@ -7,8 +7,11 @@ import { AuthenticationService } from './authentication.service';
 export class RequestInterceptor implements HttpInterceptor {
     constructor(private _auth: AuthenticationService) {}
     intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log(httpRequest.method, httpRequest.url);
-        return next.handle(httpRequest.clone({setHeaders: {authorization: `bearer ${this._auth.token}`}}));
+        if(this._auth.token){
+            return next.handle(httpRequest.clone({setHeaders: {authorization: `bearer ${this._auth.token}`}}));
+        } else {
+            return next.handle(httpRequest.clone());
+        }
     }
     
 }

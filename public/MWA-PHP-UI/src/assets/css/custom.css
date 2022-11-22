@@ -52,3 +52,18 @@
     /* background-size: 500px 700px; */
     background-image: url('https://wallpapercrafter.com/th800/106306-PlayStation-2-collage-video-games-PlayStation.jpg');
 }
+
+.component-wrapper {
+    margin: 30px auto;
+    background: darkslategray;
+    min-height: 60vh;
+    padding: 20px;;
+}
+
+.form-error {
+    color: #FF2400;
+}
+
+.platforms-wrapper {
+    margin-top: 15px;
+}

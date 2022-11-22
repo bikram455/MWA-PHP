@@ -11,7 +11,7 @@ const _checkUserExists = function(user) {
         if(user) {
             resolve(user);
         } else {
-            reject({status: process.env.BAD_REQUEST_STATUS_CODE,  error: USERS_CONSTANTS.USERNAME_PASSWORD_INVALID});
+            reject({status: process.env.BAD_REQUEST_STATUS_CODE,  error: USERS_CONSTANTS.USERNAME_PASSWORD_INCORRECT});
         }
     })
 }
@@ -23,7 +23,7 @@ const _checkPassword = function(password, user) {
             if(passwordMatch) {
                 resolve(user);
             } else {
-                reject({status: process.env.BAD_REQUEST_STATUS_CODE,  error: USERS_CONSTANTS.USERNAME_PASSWORD_INVALID});
+                reject({status: process.env.UNAUTHORIZED_STATUS_CODE,  error: USERS_CONSTANTS.USERNAME_PASSWORD_INCORRECT});
             }
         })
         .catch((err) => reject(err));

@@ -1,24 +1,26 @@
-<div>
-    <ng-container>
-        Game Title:<h4 > {{game.name}}</h4>
-        <!-- Game Title:<h4 *ngIf="!editGameNameFlag" (click)="showEditName()"> {{game.name}}</h4>
-        <form #nameForm="ngForm" (ngSubmit)="editGameName(nameForm)" *ngIf="editGameNameFlag">
-            <input name="name" [(ngModel)]="editGamebody.name">
-            <button type="button" (click)="hideEditName()">Cancel</button>
-            <button >Edit</button>
-        </form> -->
-    </ng-container>
-    <ng-container>
-        Publisher: <h4>{{game.publisher}}</h4>
-        <!-- Publisher: <h4 *ngIf="!editGamePublisherFlag" (click)="showEditPublisher()">{{game.publisher}}</h4> -->
-        <!-- <form #publisherForm="ngForm" (ngSubmit)="editGamePublisher(publisherForm)" *ngIf="editGamePublisherFlag">
-            <input name="publisher" [(ngModel)]="editGamebody.publisher">
-            <button type="button" (click)="hideEditPublisher()">Cancel</button>
-            <button >Edit</button>
-        </form> -->
-    </ng-container>
-    <ng-container *ngIf="editPlatformFlag">
-        <app-edit-platform [gameId]="game._id" [platform]="editPlatform" (toggleView)="hideEdit()" (reloadPlatforms)="fetchPlatforms()"></app-edit-platform>
-    </ng-container>
-    <app-platforms [editFlag]="editPlatformFlag" [platforms]="game.platforms" (fetchPlatformsEvent)="fetchPlatforms()" (showEditEvent)="showEdit($event)" *ngIf="!editPlatformFlag"></app-platforms>
-</div>
+<!-- <div class="row"> -->
+    <div class="col-md-9 component-wrapper">
+        <ng-container>
+            Game Title:<h4 > {{game.name}}</h4>
+            <!-- Game Title:<h4 *ngIf="!editGameNameFlag" (click)="showEditName()"> {{game.name}}</h4>
+            <form #nameForm="ngForm" (ngSubmit)="editGameName(nameForm)" *ngIf="editGameNameFlag">
+                <input name="name" [(ngModel)]="editGamebody.name">
+                <button type="button" (click)="hideEditName()">Cancel</button>
+                <button >Edit</button>
+            </form> -->
+        </ng-container>
+        <ng-container>
+            Publisher: <h4>{{game.publisher}}</h4>
+            <!-- Publisher: <h4 *ngIf="!editGamePublisherFlag" (click)="showEditPublisher()">{{game.publisher}}</h4> -->
+            <!-- <form #publisherForm="ngForm" (ngSubmit)="editGamePublisher(publisherForm)" *ngIf="editGamePublisherFlag">
+                <input name="publisher" [(ngModel)]="editGamebody.publisher">
+                <button type="button" (click)="hideEditPublisher()">Cancel</button>
+                <button >Edit</button>
+            </form> -->
+        </ng-container>
+        <ng-container *ngIf="editPlatformFlag">
+            <app-edit-platform [gameId]="game._id" [platform]="editPlatform" (toggleView)="hideEdit()" (reloadPlatforms)="fetchPlatforms()"></app-edit-platform>
+        </ng-container>
+        <app-platforms [editFlag]="editPlatformFlag" [platforms]="game.platforms" (fetchPlatformsEvent)="fetchPlatforms()" (showEditEvent)="showEdit($event)" *ngIf="!editPlatformFlag"></app-platforms>
+    </div>
+<!-- </div> -->

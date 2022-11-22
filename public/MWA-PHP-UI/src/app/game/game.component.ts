@@ -21,7 +21,7 @@ export class GameComponent implements OnInit {
   constructor(private _gamesService: GamesService, private _route: ActivatedRoute, private _platformService: PlatformsService) { }
 
   ngOnInit(): void {
-    this.#gameId = this._route.snapshot.url[1].path;
+    this.#gameId = this._route.snapshot.params['gameId'];
     this.fetchGame();  
   }
   
@@ -74,7 +74,6 @@ export class GameComponent implements OnInit {
   }
 
   editGameName(game: NgForm): void {
-    console.log(game.value)
     this._gamesService.updateGamePartial(this.#gameId, game.value).subscribe(res => {
       this.hideEditName();
       this.fetchGame();
@@ -92,7 +91,6 @@ export class GameComponent implements OnInit {
   }
 
   editGamePublisher(game: NgForm): void {
-    console.log(game.value)
     this._gamesService.updateGamePartial(this.#gameId, game.value).subscribe(res => {
       this.hideEditPublisher();
       this.fetchGame();

@@ -4,7 +4,7 @@
   "description": "This is a personal hobby project created for the MWA course.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon --inspect",
     "start": "node index.js",
     "start-frontend": "cd public/MWA-PHP-UI && npm start",
     "start-backend": "node index.js",

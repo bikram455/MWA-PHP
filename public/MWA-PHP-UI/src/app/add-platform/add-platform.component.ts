@@ -20,7 +20,6 @@ export class AddPlatformComponent implements OnInit {
   constructor(private _platformService: PlatformsService) { }
 
   ngOnInit(): void {
-    console.log('emmitting event from child', this.gameId);
   }
 
   clearFields(): void {

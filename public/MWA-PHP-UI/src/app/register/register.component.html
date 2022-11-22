@@ -1,25 +1,24 @@
-<div class="register">
+<div class="col-md-6 component-wrapper">
     <form [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="form-group">
-            <label class="form-label mt-4" for="inputValid">Name</label>
-            <input type="text"  class="form-control " id="inputValid" formControlName="name">
-            <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+            <label class="form-label mt-4" >Name</label>
+            <input type="text"  class="form-control "  formControlName="name">
         </div>
         <div class="form-group">
-            <label class="form-label mt-4" for="inputValid">Username</label>
-            <input type="text"  class="form-control" id="inputValid" formControlName="username">
-            <!-- <div class="valid-feedback">Success! You've done it.</div> -->
+            <label class="form-label mt-4" >Username</label>
+            <input type="text"  class="form-control"  formControlName="username">
         </div>
         <div class="form-group">
-            <label class="form-label mt-4" for="inputValid">Password</label>
-            <input type="text"  class="form-control" id="inputValid" formControlName="password">
-            <!-- <div class="valid-feedback">Success! You've done it.</div> -->
-        </div><br>
-        <!-- <div class="form-group">
-            <label class="form-label mt-4" for="inputInvalid">Invalid input</label>
-            <input type="text"  class="form-control" id="inputInvalid">
-            <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
-        </div> -->
+            <label class="form-label mt-4" >Password</label>
+            <input type="text"  class="form-control"  formControlName="password">
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4">Confirm Password</label>
+            <input type="text"  class="form-control" formControlName="confirmPassword">
+        </div>
+        <div class="form-group form-error">
+            <label class="form-label mt-4">{{formError}}</label>
+        </div>
         <div class="form-group">
             <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Register</button>
         </div>

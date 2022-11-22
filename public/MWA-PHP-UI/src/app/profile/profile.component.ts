@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
     if(this._auth.isLoggedIn) {
       this.usersService.fetchUser(this.username).subscribe({
         next: (res) => {
-          console.log(res);
+          
         },
         error: (err) => {
           console.error(err);

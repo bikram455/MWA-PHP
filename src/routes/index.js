@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const gamesRoutes = require('./games.routes');
 const usersRoutes = require('./users.routes');
+const authController = require('../controller/authentication.controller');
 
 const router = Router();
 
