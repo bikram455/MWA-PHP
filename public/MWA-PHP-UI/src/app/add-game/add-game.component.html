@@ -1,19 +1,19 @@
 <div class="modal-body">
-    <p>Modal body text goes here.</p>
     <form [formGroup]="addGameForm" (ngSubmit)="addGame()">
-        <table>
-            <tr>
-                <td>Game name: </td>
-                <td><input formControlName="name"><br></td>
-            </tr>
-            <tr>
-                <td>Publisher: </td>
-                <td><input formControlName="publisher"><br></td>
-            </tr>
-            <tr>
-                <td><button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Close</button></td>
-                <td><button type="submit" class="btn btn-primary">Add Game</button></td>
-            </tr>
-        </table>
+        <div class="form-group">
+            <label class="form-label mt-4" >{{gameTitle}}</label>
+            <input type="text"  class="form-control "  formControlName="name">
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" >{{publisher}}</label>
+            <input type="text"  class="form-control"  formControlName="publisher">
+        </div>
+        <div class="form-group form-error">
+            <label class="form-label mt-4">{{formError}}</label>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-danger my-2 my-lg-0 log-in-button" (click)="closeModal()">{{cancel}}</button>
+            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">{{addGameText}}</button>
+        </div>
     </form>
 </div>

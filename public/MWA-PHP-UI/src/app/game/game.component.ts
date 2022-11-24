@@ -21,6 +21,7 @@ export class GameComponent implements OnInit {
   editGamePublisherFlag: boolean = false;
   get gameTitle(): string {return environment.gameTitle}
   get publisher(): string {return environment.publisher}
+  get videoGameImage(): string {return environment.videoGameImage}
   constructor(private _gamesService: GamesService, private _route: ActivatedRoute, private _platformService: PlatformsService) { }
 
   ngOnInit(): void {

@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class GamesService {
-  // #baseUrl: string = 'http://localhost:3000/api/'
   constructor(private _http: HttpClient) { }
 
   fetchGames(page: number): Observable<GamesData> {

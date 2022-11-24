@@ -77,3 +77,13 @@
 .footer-image {
     height: 80px;
 }
+.btn-danger {
+    margin-right: 10px;
+}
+.login-input {
+    margin-right: 10px;
+}
+.game-image {
+    height: 200px;
+    width: 300px;
+}

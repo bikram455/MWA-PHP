@@ -11,26 +11,26 @@ import { UsersService } from '../users.service';
 export class ProfileComponent implements OnInit {
   get username(): string {
     if (this._auth.token) {
-      return this._jwt.decodeToken(this._auth.token)['name'];
+      return this._jwt.decodeToken(this._auth.token).name;
     }
     return this._auth.name
   }
   constructor(private usersService: UsersService, private _auth: AuthenticationService, private _jwt: JwtHelperService) { }
 
   ngOnInit(): void {
-    this._fetchUserData();
+    // this._fetchUserData();
   }
 
-  _fetchUserData(): void {
-    if(this._auth.isLoggedIn) {
-      this.usersService.fetchUser(this.username).subscribe({
-        next: (res) => {
+  // _fetchUserData(): void {
+  //   if(this._auth.isLoggedIn) {
+  //     this.usersService.fetchUser(this.username).subscribe({
+  //       next: (res) => {
           
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      })
-    }
-  }
+  //       },
+  //       error: (err) => {
+  //         console.error(err);
+  //       }
+  //     })
+  //   }
+  // }
 }

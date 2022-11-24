@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   get username(): string {
     return this._auth.name
   }
+  formError: string = environment.main;
   set username(name: string) { this._auth.name = name }
   get loggedIn(): boolean { return this._auth.isLoggedIn }
   get welcome(): string {return environment.welcome}
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
 
   login(login: NgForm) {
     if (login.invalid) {
+      this.formError = environment.allFieldsRequired;
       return;
     }
     this._usersService.login(login.value).subscribe({

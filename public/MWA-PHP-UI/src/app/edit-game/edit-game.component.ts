@@ -17,6 +17,7 @@ export class EditGameComponent implements OnInit {
   editGameForm!: NgForm;
   get gameTitle(): string {return environment.gameTitle}
   get publisher(): string {return environment.publisher}
+  get cancel(): string {return environment.cancel}
   get editGameText(): string {return environment.editGameText}
   formError: string = environment.main;
   constructor(private _route: ActivatedRoute, private _gameService: GamesService, private router: Router) { }
@@ -48,5 +49,9 @@ export class EditGameComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  cancelEdit(): void {
+    this.router.navigate([environment.gotogames]);
   }
 }

@@ -1,6 +1,12 @@
-<div class="col-md-9 component-wrapper">
-    {{gameTitle}}<h4> {{game.name}}</h4>
-    {{publisher}}<h4>{{game.publisher}}</h4>
+<div class="row col-md-9 component-wrapper">
+    <div class="col-md-6">
+        {{gameTitle}}<h4> {{game.name}}</h4>
+        {{publisher}}<h4>{{game.publisher}}</h4>
+    </div>
+    <!-- This image displayed is a mock image. This is supposed to be replaced by a dynamic image -->
+    <div class="col-md-6">
+        <img [src]="videoGameImage" class="game-image">
+    </div>
     <ng-container *ngIf="editPlatformFlag">
         <app-edit-platform [gameId]="game._id" [platform]="editPlatform" (toggleView)="hideEdit()"
             (reloadPlatforms)="fetchPlatforms()"></app-edit-platform>

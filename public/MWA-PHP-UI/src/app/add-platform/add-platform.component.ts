@@ -18,6 +18,7 @@ export class AddPlatformComponent implements OnInit {
   hideAddPlatform = new EventEmitter<boolean>;
   @ViewChild(environment.platform)
   platForm!: NgForm;
+  formError!: string;
   get platformName(): string {return environment.platformName};
   get releasedYear(): string {return environment.releasedYear};
   get addPlatformText(): string {return environment.addPlatform};
@@ -34,6 +35,10 @@ export class AddPlatformComponent implements OnInit {
   }
 
   addPlatform(dataBody: NgForm) {
+    if(dataBody.value.name === environment.main || dataBody.value.year === environment.main) {
+      this.formError = environment.allFieldsRequired;
+      return;
+    }
     this._platformService.addPlatform(this.gameId, dataBody.value).subscribe({
       next: res => {
         this.clearFields();

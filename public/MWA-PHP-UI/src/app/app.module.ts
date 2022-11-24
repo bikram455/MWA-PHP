@@ -43,8 +43,7 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    // JwtModule
+    ReactiveFormsModule
   ],
   providers: [
     JwtHelperService,

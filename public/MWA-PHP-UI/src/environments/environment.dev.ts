@@ -52,4 +52,5 @@ export const environment = {
   welcome: 'Welcome',
   logOut: 'Log Out',
   logIn: 'Log In',
+  videoGameImage: 'assets/images/videogames.jpg',
 };
