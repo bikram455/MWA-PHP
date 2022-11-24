@@ -19,7 +19,14 @@
     <div class="table-container">
         <table class="table table-hover">
             <thead>
-                <tr class="table-primary">
+                <tr class="table-primary" *ngIf="!showtable()">
+                    <th scope="col">{{noGames}}</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                <tr class="table-primary" *ngIf="showtable()">
                     <th scope="col">{{gameTitle}}</th>
                     <th scope="col">{{publisher}}</th>
                     <th scope="col"></th>
@@ -27,7 +34,7 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="showtable()">
                 <tr *ngFor="let game of games; let i = index" [ngClass]="getRowClass(i)">
                     <th scope="row">
                         <span *ngIf="!game.editName" (click)="showEditName(game)">{{game.name}}</span>
@@ -59,7 +66,7 @@
         </table>
     </div>
 
-    <div>
+    <div *ngIf="showtable()">
         <ul class="pagination pagination-lg">
             <li class="page-item" [ngClass]="{'disabled': currentPage == 0}">
                 <a class="page-link" (click)="getPrevious()">&laquo;</a>

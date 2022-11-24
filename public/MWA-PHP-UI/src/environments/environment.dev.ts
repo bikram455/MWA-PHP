@@ -46,6 +46,7 @@ export const environment = {
   emptyArray: [],
   zero: 0,
   defaultCount: 5,
+  one: 1,
   addGameText: 'Add Game',
   addNewGame: 'Add New Game',
   myModal: 'my-modal',
@@ -53,4 +54,5 @@ export const environment = {
   logOut: 'Log Out',
   logIn: 'Log In',
   videoGameImage: 'assets/images/videogames.jpg',
+  noGames: 'No Games, Add a Game!',
 };

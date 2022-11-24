@@ -26,6 +26,7 @@ export class GamesComponent implements OnInit {
   get addNewGame(): string {return environment.addNewGame}
   get gameTitle(): string {return environment.gameTitle}
   get publisher(): string {return environment.publisher}
+  get noGames(): string {return environment.noGames}
   constructor(private _gamesService: GamesService, private _formBuilder: FormBuilder, private _auth: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -41,6 +42,7 @@ export class GamesComponent implements OnInit {
       if(res.count % environment.defaultCount == 0) {
         --this.totalPages;
       }
+      this.pages.length = environment.zero;
       for(let i = 0; i <= this.totalPages; i++) {
         this.pages[i] = i + 1;
       }
@@ -59,6 +61,9 @@ export class GamesComponent implements OnInit {
   deleteGame(gameId: string) {
     this._gamesService.deleteGame(gameId).subscribe({
       next: res => {
+        if(this.games.length === environment.one) {
+          --this.currentPage;
+        }
         this.fetchGames();
       }, error: err => {
         console.error(err);
@@ -173,5 +178,12 @@ export class GamesComponent implements OnInit {
     } else {
       return environment.main;
     }
+  }
+
+  showtable(): boolean {
+    if(this.games){
+      return this.games.length > 0;
+    }
+    return false;
   }
 }

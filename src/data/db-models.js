@@ -42,6 +42,7 @@ const userSchema = mongoose.Schema({
         // select: false
     }
 });
-mongoose.model(process.env.GAME_MODEL, gameSchema, process.env.GAMES_COLLECTION);
+const game = mongoose.model(process.env.GAME_MODEL, gameSchema, process.env.GAMES_COLLECTION);
+game.createIndexes();
 const user = mongoose.model(process.env.USER_MODEL, userSchema, process.env.USERS_COLLECTION);
 user.createIndexes();

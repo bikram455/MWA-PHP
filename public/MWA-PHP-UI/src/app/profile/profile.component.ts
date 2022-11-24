@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../authentication.service';
-import { UsersService } from '../users.service';
+import { User, UsersService } from '../users.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,22 +16,25 @@ export class ProfileComponent implements OnInit {
     }
     return this._auth.name
   }
+  user!: User;
+  get name(): string { return environment.name}
+  get usernameText(): string {return environment.username}
   constructor(private usersService: UsersService, private _auth: AuthenticationService, private _jwt: JwtHelperService) { }
 
   ngOnInit(): void {
-    // this._fetchUserData();
+    this._fetchUserData();
   }
 
-  // _fetchUserData(): void {
-  //   if(this._auth.isLoggedIn) {
-  //     this.usersService.fetchUser(this.username).subscribe({
-  //       next: (res) => {
-          
-  //       },
-  //       error: (err) => {
-  //         console.error(err);
-  //       }
-  //     })
-  //   }
-  // }
+  _fetchUserData(): void {
+    if(this._auth.isLoggedIn) {
+      this.usersService.fetchUser(this.username).subscribe({
+        next: (res) => {
+          this.user = res;
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      })
+    }
+  }
 }

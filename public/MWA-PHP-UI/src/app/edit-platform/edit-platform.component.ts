@@ -18,6 +18,7 @@ export class EditPlatformComponent implements OnInit {
   toggleView = new EventEmitter<void>;
   @Output()
   reloadPlatforms = new EventEmitter<void>;
+  formError: string = environment.main;
   get platformName(): string {return environment.platformName};
   get releasedYear(): string {return environment.releasedYear};
   get editPlatformText(): string {return environment.editPlatform};
@@ -34,6 +35,7 @@ export class EditPlatformComponent implements OnInit {
 
   editPlatform(): void {
     if(this.editForm.invalid) {
+      this.formError = environment.allFieldsRequired;
       return;
     }
     this.editForm.value.year = parseInt(this.editForm.value.year);

@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   _resetForm(): void {
     this.user.name = environment.main;
     this.user.password = environment.main;
+    this.formError = environment.main;
   }
 
   login(login: NgForm) {

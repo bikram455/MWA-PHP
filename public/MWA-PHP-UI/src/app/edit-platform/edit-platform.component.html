@@ -9,6 +9,9 @@
             <label class="form-label mt-4">{{releasedYear}}</label>
             <input type="text" name="year" class="form-control" type="number" formControlName="year">
         </div>
+        <div class="form-group form-error">
+            <label class="form-label mt-4">{{formError}}</label>
+        </div>
         <div class="form-group">
             <button class="btn btn-danger my-2 my-lg-0" type="button" (click)="cancelEdit()">{{cancel}}</button>
             <button class="btn btn-secondary my-2 my-lg-0">{{edit}}</button>
