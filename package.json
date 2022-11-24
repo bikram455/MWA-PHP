@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-frontend": "cd public/MWA-PHP-UI && npm start",
     "start": "npm run start-frontend | npm run start-backend",
-    "install-all": "npm install | cd public/MWA-PHP-UI npm install"
+    "install-all": "npm install | (cd public/MWA-PHP-UI && npm install)"
   },
   "author": "Bikram Samsohang",
   "license": "ISC",
