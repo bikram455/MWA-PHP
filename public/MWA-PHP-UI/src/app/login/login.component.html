@@ -9,11 +9,11 @@
                 [(ngModel)]="user.password">
         </div>
         <div class="col-md-4">
-            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Log In</button>
+            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">{{logInText}}</button>
         </div>
     </form>
 </div>
 <div class="row" *ngIf="loggedIn">
-    <div class="col-md-6" style="text-align: right;">Welcome {{username}} </div>
-    <div class="col-md-6"><a (click)="logOut()" style="color: red;">Log Out</a></div>
+    <div class="col-md-6" style="text-align: right;">{{welcome + " " + username}} </div>
+    <div class="col-md-6"><a (click)="logOut()" style="color: red;">{{logOutText}}</a></div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Game, GamesService } from '../games.service';
 import { Platform, PlatformsService } from '../platforms.service';
 
@@ -18,37 +19,43 @@ export class GameComponent implements OnInit {
   editPlatform!: Platform;
   editGameNameFlag: boolean = false;
   editGamePublisherFlag: boolean = false;
+  get gameTitle(): string {return environment.gameTitle}
+  get publisher(): string {return environment.publisher}
   constructor(private _gamesService: GamesService, private _route: ActivatedRoute, private _platformService: PlatformsService) { }
 
   ngOnInit(): void {
-    this.#gameId = this._route.snapshot.params['gameId'];
+    this.#gameId = this._route.snapshot.params[environment.gameId];
     this.fetchGame();  
   }
   
   fetchGame() {
-    this._gamesService.fetchGame(this.#gameId).subscribe(res => {
-      this.game = res['data'];
-      this.editGamebody= new Game('', this.game.name, this.game.publisher, []);
-      this._setEditNameAndYear();
-    }, err => {
-      console.error(err);
+    this._gamesService.fetchGame(this.#gameId).subscribe({
+      next: res => {
+        this.game = res.data;
+        this.editGamebody= new Game(environment.main, this.game.name, this.game.publisher, environment.emptyArray);
+        this._setEditNameAndYear();
+      }, error: err => {
+        console.error(err);
+      }
     });
   }
 
   _setEditNameAndYear(): void {
-    this.game['platforms'].forEach(item => {
-      item['updatedName'] = item['name'];
-      item['updatedYear'] = item['year'];
+    this.game.platforms.forEach(item => {
+      item.updatedName = item.name;
+      item.updatedYear = item.year;
     });
   }
   
   fetchPlatforms() {
-    this._platformService.fetchPlatforms(this.#gameId).subscribe(res => {
-      this.game.platforms = res['data'];
-      this._setEditNameAndYear();
-      this.toggleAddPlatformVisibility(false);
-    }, err => {
-      console.error(err);
+    this._platformService.fetchPlatforms(this.#gameId).subscribe({
+      next: res => {
+        this.game.platforms = res.data;
+        this._setEditNameAndYear();
+        this.toggleAddPlatformVisibility(false);
+      }, error: err => {
+        console.error(err);
+      }
     });
   }
 
@@ -62,40 +69,28 @@ export class GameComponent implements OnInit {
   }
 
   hideEdit(): void {
-    this.editPlatformFlag = false;
+    this.editPlatformFlag = environment.false;
   }
 
-  showEditName(): void {
-    this.editGameNameFlag = true;
-  }
-
-  hideEditName(): void {
-    this.editGameNameFlag = false;
-  }
 
   editGameName(game: NgForm): void {
-    this._gamesService.updateGamePartial(this.#gameId, game.value).subscribe(res => {
-      this.hideEditName();
-      this.fetchGame();
-    }, err => {
-      console.error(err);
+    this._gamesService.updateGamePartial(this.#gameId, game.value).subscribe({
+      next: res => {
+        this.fetchGame();
+      }, error: err => {
+        console.error(err);
+      }
     });
   }
 
-  showEditPublisher(): void {
-    this.editGamePublisherFlag = true;
-  }
-
-  hideEditPublisher(): void {
-    this.editGamePublisherFlag = false;
-  }
 
   editGamePublisher(game: NgForm): void {
-    this._gamesService.updateGamePartial(this.#gameId, game.value).subscribe(res => {
-      this.hideEditPublisher();
-      this.fetchGame();
-    }, err => {
-      console.error(err);
+    this._gamesService.updateGamePartial(this.#gameId, game.value).subscribe({
+      next: res => {
+        this.fetchGame();
+      }, error: err => {
+        console.error(err);
+      }
     });
   }
 }

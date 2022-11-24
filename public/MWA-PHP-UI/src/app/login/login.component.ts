@@ -14,16 +14,15 @@ import { User, UsersService } from '../users.service';
 export class LoginComponent implements OnInit {
   @ViewChild('loginForm')
   loginForm!: NgForm;
-  user: User = new User('', '');
+  user: User = new User(environment.main, environment.main);
   get username(): string {
-    if (this._auth.token) {
-      return this._jwt.decodeToken(this._auth.token)['name'];
-    }
     return this._auth.name
   }
   set username(name: string) { this._auth.name = name }
   get loggedIn(): boolean { return this._auth.isLoggedIn }
-
+  get welcome(): string {return environment.welcome}
+  get logOutText(): string {return environment.logOut}
+  get logInText(): string {return environment.logIn}
 
   constructor(private _usersService: UsersService, private _auth: AuthenticationService, private _jwt: JwtHelperService, private _router: Router) { }
 
@@ -31,8 +30,8 @@ export class LoginComponent implements OnInit {
   }
 
   _resetForm(): void {
-    this.user.name = '';
-    this.user.password = '';
+    this.user.name = environment.main;
+    this.user.password = environment.main;
   }
 
   login(login: NgForm) {
@@ -52,7 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   logOut(): void {
-    this._router.navigate(['/']);
+    this._router.navigate([environment.main]);
     this._auth.removeToken();
   }
 }

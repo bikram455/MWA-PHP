@@ -39,9 +39,9 @@ export class NavigateComponent implements OnInit {
       return;
     }
     this._usersService.login(login.value).subscribe(res => {
-      this._auth.token = res['data']['token'];
+      this._auth.token = res.data.token;
       this.username = this._auth.name; 
-      this.username = res['data']['name']; 
+      this.username = res.data.name;
     }, err => {
       console.error(err);
     });

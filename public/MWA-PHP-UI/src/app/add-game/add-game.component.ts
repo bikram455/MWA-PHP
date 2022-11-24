@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { GamesService } from '../games.service';
 
 @Component({
@@ -20,8 +21,8 @@ export class AddGameComponent implements OnInit {
 
   _initializeForm(): void {
     this.addGameForm = this._formBuilder.group({
-      name: [''],
-      publisher: [''],
+      name: [environment.main],
+      publisher: [environment.main],
     });
   }
 
@@ -31,7 +32,7 @@ export class AddGameComponent implements OnInit {
 
   addGame() {
     this._gamesService.addGame(this.addGameForm.value).subscribe(res => {
-      this._router.navigate(['games']);
+      this._router.navigate([environment.games]);
       this.closeModal();
     }, err => {
       console.error(err);

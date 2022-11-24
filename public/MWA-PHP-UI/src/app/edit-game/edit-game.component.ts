@@ -12,29 +12,41 @@ import { environment } from 'src/environments/environment';
 })
 export class EditGameComponent implements OnInit {
   #gameId!: string;
-  game: Game = new Game('', 'test game', 'test publisher', []);
-  @ViewChild('editGameForm')
+  game: Game = new Game(environment.main, environment.main, environment.main, []);
+  @ViewChild(environment.editGameForm)
   editGameForm!: NgForm;
+  get gameTitle(): string {return environment.gameTitle}
+  get publisher(): string {return environment.publisher}
+  get editGameText(): string {return environment.editGameText}
+  formError: string = environment.main;
   constructor(private _route: ActivatedRoute, private _gameService: GamesService, private router: Router) { }
 
   ngOnInit(): void {
-    this.#gameId = this._route.snapshot.params['gameId'];
+    this.#gameId = this._route.snapshot.params[environment.gameId];
     this.fetchGames();
   }
 
   fetchGames(): void {
-    this._gameService.fetchGame(this.#gameId).subscribe(res => {
-      this.game = res['data'];
-    }, err => {
-      console.error(err);
+    this._gameService.fetchGame(this.#gameId).subscribe({
+      next: res => {
+        this.game = res.data;
+      }, error: err => {
+        console.error(err);
+      }
     });
   }
 
   editGame(gameBody: NgForm): void {
-    this._gameService.updateGame(this.#gameId, gameBody.value).subscribe(res => {
-      this.router.navigate([environment.gotogames]);
-    }, err => {
-      console.error(err);
-    })
+    if(gameBody.value.name === environment.main || gameBody.value.publisher === environment.main) {
+      this.formError = environment.allFieldsRequired;
+      return;
+    }
+    this._gameService.updateGame(this.#gameId, gameBody.value).subscribe({
+      next: res => {
+        this.router.navigate([environment.gotogames]);
+      }, error: err => {
+        console.error(err);
+      }
+    });
   }
 }

@@ -68,3 +68,12 @@
 .platforms-wrapper {
     margin-top: 15px;
 }
+.form-wrapper {
+    background: darkgrey;
+    padding: 0 15px;
+    border-radius: 5px;
+}
+
+.footer-image {
+    height: 80px;
+}

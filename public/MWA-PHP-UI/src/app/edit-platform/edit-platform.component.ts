@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import { Platform, PlatformsService } from '../platforms.service';
 
 @Component({
@@ -17,21 +18,32 @@ export class EditPlatformComponent implements OnInit {
   toggleView = new EventEmitter<void>;
   @Output()
   reloadPlatforms = new EventEmitter<void>;
+  get platformName(): string {return environment.platformName};
+  get releasedYear(): string {return environment.releasedYear};
+  get editPlatformText(): string {return environment.editPlatform};
+  get cancel(): string {return environment.cancel};
+  get edit(): string {return environment.edit};
   constructor(private _formBuilder: FormBuilder, private _platformService: PlatformsService) { }
 
   ngOnInit(): void {
     this.editForm = this._formBuilder.group({
-      name: this.platform.name,
-      year: this.platform.year
+      name: [this.platform.name, Validators.required],
+      year: [this.platform.year, Validators.required]
     });
   }
 
   editPlatform(): void {
-    this._platformService.updatePlatform(this.gameId, this.platform._id, this.editForm.value).subscribe(res => {
-      this.cancelEdit();
-      this.reloadPlatforms.emit();
-    }, err => {
-      console.error(err);
+    if(this.editForm.invalid) {
+      return;
+    }
+    this.editForm.value.year = parseInt(this.editForm.value.year);
+    this._platformService.updatePlatform(this.gameId, this.platform._id, this.editForm.value).subscribe({
+      next: res => {
+        this.cancelEdit();
+        this.reloadPlatforms.emit();
+      }, error: err => {
+        console.error(err);
+      }
     });
   }
 

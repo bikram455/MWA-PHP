@@ -1,10 +1,17 @@
-<form [formGroup]="editForm" (ngSubmit)="editPlatform()">
-    <div>
-        <label>Platform name: <input name="name" formControlName="name"></label>
-    </div>
-    <div>
-        <label>Released year: <input type="number" name="year" formControlName="year"></label>
-    </div>
-    <button>Edit</button>
-    <button type="button" (click)="cancelEdit()">Cancel</button>
-</form>
+<div class="form-wrapper">
+    <form [formGroup]="editForm" (ngSubmit)="editPlatform()">
+        <label class="form-label mt-1">{{editPlatformText}}</label>
+        <div class="form-group">
+            <label class="form-label mt-4">{{platformName}}</label>
+            <input type="text" name="name" class="form-control" formControlName="name">
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4">{{releasedYear}}</label>
+            <input type="text" name="year" class="form-control" type="number" formControlName="year">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-danger my-2 my-lg-0" type="button" (click)="cancelEdit()">{{cancel}}</button>
+            <button class="btn btn-secondary my-2 my-lg-0">{{edit}}</button>
+        </div>
+    </form>
+</div>

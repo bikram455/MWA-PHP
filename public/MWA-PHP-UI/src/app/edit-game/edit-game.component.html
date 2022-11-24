@@ -1,24 +1,19 @@
-<form #editGameForm="ngForm" (ngSubmit)="editGame(editGameForm)">
-    <div class="form-group">
-        <label class="form-label mt-4" for="inputValid">Game title</label>
-        <input type="text"  class="form-control " id="inputValid" name="name" [(ngModel)]="game.name">
-        <!-- <div class="valid-feedback">Success! You've done it.</div> -->
-    </div>
-    <div class="form-group">
-        <label class="form-label mt-4" for="inputValid">Publisher</label>
-        <input type="text"  class="form-control " id="inputValid" name="publisher" [(ngModel)]="game.publisher">
-        <!-- <div class="valid-feedback">Success! You've done it.</div> -->
-    </div>
-    <div class="form-group">
-        <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Edit Game</button>
-    </div>
-    <!-- <div>
-        <label>Game title: <input name="name" [(ngModel)]="game.name"></label>
-    </div> -->
-    <!-- <div>
-        <label>Publisher: <input name="publisher" [(ngModel)]="game.publisher"></label>
-    </div> -->
-    <!-- <div>
-        <button>Edit Game</button>
-    </div> -->
-</form>
+<div class="col-md-4 component-wrapper">
+    <form #editGameForm="ngForm" (ngSubmit)="editGame(editGameForm)">
+        <div class="form-group">
+            <label class="form-label mt-4">{{gameTitle}}</label>
+            <input type="text"  class="form-control" name="name" [(ngModel)]="game.name">
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4">{{publisher}}</label>
+            <input type="text"  class="form-control" name="publisher" [(ngModel)]="game.publisher">
+        </div>
+        <div class="form-group form-error">
+            <label class="form-label mt-4">{{formError}}</label>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">{{editGameText}}</button>
+        </div>
+    </form>
+    
+</div>

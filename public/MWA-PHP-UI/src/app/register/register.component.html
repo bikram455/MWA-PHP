@@ -1,26 +1,26 @@
 <div class="col-md-6 component-wrapper">
     <form [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="form-group">
-            <label class="form-label mt-4" >Name</label>
+            <label class="form-label mt-4" >{{name}}</label>
             <input type="text"  class="form-control "  formControlName="name">
         </div>
         <div class="form-group">
-            <label class="form-label mt-4" >Username</label>
+            <label class="form-label mt-4" >{{username}}</label>
             <input type="text"  class="form-control"  formControlName="username">
         </div>
         <div class="form-group">
-            <label class="form-label mt-4" >Password</label>
+            <label class="form-label mt-4" >{{password}}</label>
             <input type="text"  class="form-control"  formControlName="password">
         </div>
         <div class="form-group">
-            <label class="form-label mt-4">Confirm Password</label>
+            <label class="form-label mt-4">{{confirmPassword}}</label>
             <input type="text"  class="form-control" formControlName="confirmPassword">
         </div>
         <div class="form-group form-error">
             <label class="form-label mt-4">{{formError}}</label>
         </div>
         <div class="form-group">
-            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">Register</button>
+            <button class="btn btn-secondary my-2 my-lg-0 log-in-button">{{registertext | titlecase}}</button>
         </div>
     </form>
 </div>

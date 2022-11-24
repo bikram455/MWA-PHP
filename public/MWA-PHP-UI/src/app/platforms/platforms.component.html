@@ -3,7 +3,7 @@
         <button type="button" class="btn btn-success" (click)="toggleAddPlatformVisibility(true)" *ngIf="isLoggedIn">Add
             New Platform</button>
     </div>
-    <table class="table table-hover platforms-wrapper">
+    <table class="table table-hover platforms-wrapper" *ngIf="!addPlatformVisible">
         <ng-container *ngIf="!showTable()">
             <thead>
                 <tr class="table-primary">

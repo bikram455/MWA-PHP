@@ -13,14 +13,19 @@ import { environment } from 'src/environments/environment';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   formError!: string;
+  get name(): string {return environment.name}
+  get username(): string {return environment.username}
+  get password(): string {return environment.password}
+  get confirmPassword(): string {return environment.confirmPassword}
+  get registertext(): string {return environment.register}
   constructor(private _formBuilder: FormBuilder, private _usersService: UsersService, private _router: Router, private _auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      name: [environment.main, Validators.required],
+      username: [environment.main, Validators.required],
+      password: [environment.main, Validators.required],
+      confirmPassword: [environment.main, Validators.required]
     });
   }
 
